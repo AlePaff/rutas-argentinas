@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas Nacionales en OSM</title>
+
+    <!-- Leaflet.js (Mapa de OpenStreetMap) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Panel lateral con checkboxes -->
+    <div id="sidebar">
+        <h3>Rutas Nacionales</h3>
+        <label>
+            <input type="checkbox" id="toggleAll">
+            Seleccionar Todas
+        </label>
+        <div id="routes"></div>
+    </div>
+
+    <!-- Mapa de OpenStreetMap -->
+    <div id="map"></div>
+
+    <!-- Script con lógica -->
+    <script src="script.js"></script>
+
+</body>
+</html>

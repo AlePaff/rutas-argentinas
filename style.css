@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+/* Contenedor del mapa */
+#map {
+    width: 80%;
+    height: 100vh;
+}
+
+/* Panel de control de rutas */
+#sidebar {
+    width: 20%;
+    padding: 10px;
+    background: #f4f4f4;
+    overflow-y: auto;
+    border-right: 2px solid #ccc;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+/* Checkbox estilizado */
+label {
+    display: block;
+    margin: 5px 0;
+    cursor: pointer;
+}
