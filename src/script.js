@@ -78,13 +78,33 @@ class RouteFetcher {
         }
     }
 
+    
+    // Guardar datos en cache
+    async saveToCache(routeId, data) {
+        const cache = await caches.open("routes-cache");
+        cache.put(routeId, new Response(JSON.stringify(data)));
+    }
+
+    // Recuperar datos desde el cache
+    async getFromCache(routeId) {
+        const cache = await caches.open("routes-cache");
+        const response = await cache.match(routeId);
+        if (response) {
+            return await response.json();
+        } else {
+            console.log("No cached data found for", routeId);
+            return null;
+        }
+    }
+
+
     async getRoute(route) {
-        // Si existe en localStorage, úsalo
-        let localData = localStorage.getItem(route);
-        if (localData) return JSON.parse(localData);
+        // Si existe en cache, devolver desde allí
+        let localData = await this.getFromCache(route);
+        if (localData) return localData;
 
         let data = await this.fetchRoute(route);
-        if (data) this.setLocalRoute(route, data);
+        if (data) this.saveToCache(route, data);
         return data;
     }
 }
@@ -113,24 +133,29 @@ class RouteController {
     initUI() {
         let routesContainer = document.getElementById("routes");
 
-        console.log("this.routesthis.routesthis.routesthis.routes", this.routes)
-
         // Agregar checkboxes dinámicamente
         this.routes.forEach(route => {
-            let label = document.createElement("label");
-            label.innerHTML = `<input type="checkbox" data-route="${route}"> ${route}`;
-            routesContainer.appendChild(label);
+            let routeDiv = document.createElement("div");
+            routeDiv.classList.add("route");
+            routeDiv.setAttribute("data-route", route);
+
+            // Usamos una imagen de ejemplo, reemplaza la URL con la ruta real
+            routeDiv.innerHTML = `
+                <img src="assets/RN1.png" alt="${route}" class="route-img">
+            `;
+
+            routesContainer.appendChild(routeDiv);
+
+            // Agregar el evento para seleccionar la ruta
+            routeDiv.addEventListener("click", () => this.toggleRoute(routeDiv, route));
         });
 
-        routesContainer.addEventListener("change", (event) => this.toggleRoute(event));
-        document.getElementById("toggleAll").addEventListener("change", () => this.toggleAllRoutes());
     }
 
-    async toggleRoute(event) {
-        let checkbox = event.target;
-        let route = checkbox.getAttribute("data-route");
+    async toggleRoute(routeDiv, route) {
+        routeDiv.classList.toggle("selected");
 
-        if (checkbox.checked) {
+        if (routeDiv.classList.contains("selected")) {
             let data = await this.routeFetcher.getRoute(route);
             if (data) {
                 let geoJson = osmtogeojson(data);

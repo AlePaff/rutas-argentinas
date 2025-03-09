@@ -6,17 +6,21 @@ body {
 
 /* Contenedor del mapa */
 #map {
-    width: 80%;
+    width: 70%;
     height: 100vh;
 }
 
 /* Panel de control de rutas */
 #sidebar {
-    width: 20%;
-    padding: 10px;
+    width: 30%;
     background: #f4f4f4;
-    overflow-y: auto;
+    height: 100vh;
+    overflow-y: scroll;
     border-right: 2px solid #ccc;
+}
+
+#rutas{
+    padding: 10px;
 }
 
 h3 {
@@ -28,4 +32,41 @@ label {
     display: block;
     margin: 5px 0;
     cursor: pointer;
+}
+
+
+
+
+
+.route {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.route img {
+    width: 40px;
+    height: 40px;
+    transition: opacity 0.3s ease;
+}
+
+/* Estilo cuando la ruta está seleccionada */
+.route.selected img {
+    opacity: 1; /* Imagen en su color original */
+    filter: none; /* Restablecer el filtro si está seleccionado */
+    transform: scale(1.1); /* Agrandar ligeramente la imagen */
+}
+
+/* Estilo cuando la ruta NO está seleccionada */
+.route img {
+    opacity: 0.6; /* Imagen atenuada */
+    filter: grayscale(100%); /* Convertir la imagen a escala de grises */
+}
+
+/* Animación suave cuando se hace click */
+.route.selected img {
+    opacity: 1; /* Restaurar la opacidad a su estado original */
+    filter: none; /* Eliminar el filtro gris */
+    transform: scale(1.1); /* Aumentar un poco la imagen al seleccionarla */
 }
