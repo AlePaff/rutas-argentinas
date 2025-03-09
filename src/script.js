@@ -137,18 +137,27 @@ class RouteController {
         this.routes.forEach(route => {
             let routeDiv = document.createElement("div");
             routeDiv.classList.add("route");
+            routeDiv.classList.add("route-img");
             routeDiv.setAttribute("data-route", route);
-
-            // Usamos una imagen de ejemplo, reemplaza la URL con la ruta real
-            routeDiv.innerHTML = `
-                <img src="assets/RN1.png" alt="${route}" class="route-img">
-            `;
-
-            routesContainer.appendChild(routeDiv);
-
-            // Agregar el evento para seleccionar la ruta
-            routeDiv.addEventListener("click", () => this.toggleRoute(routeDiv, route));
+    
+            // Cargar el SVG dinámicamente
+            fetch("assets/RNX.svg")
+                .then(response => response.text())  // Convertir a texto
+                .then(svgData => {
+                    routeDiv.innerHTML = svgData;  // Insertar el SVG en el div
+                    routesContainer.appendChild(routeDiv);
+    
+                    // Ahora sí puedes modificar el SVG
+                    let textElement = routeDiv.querySelector("#numero-ruta-nacional");
+                    if (textElement) {
+                        textElement.textContent = route;  // Modifica el texto dinámicamente
+                    }
+                    routeDiv.addEventListener("click", () => this.toggleRoute(routeDiv, route));
+                })
+                .catch(error => console.error("Error cargando el SVG:", error));
+            
         });
+    
 
     }
 
@@ -172,15 +181,7 @@ class RouteController {
             checkbox.checked = checked;
             let route = checkbox.getAttribute("data-route");
 
-            if (checked) {
-                let data = await this.routeFetcher.getRoute(route);
-                if (data) {
-                    let geoJson = osmtogeojson(data);
-                    this.mapManager.drawRoute(route, geoJson);
-                }
-            } else {
-                this.mapManager.removeRoute(route);
-            }
+            toogleRoute(checkbox, route);
         });
     }
 }
