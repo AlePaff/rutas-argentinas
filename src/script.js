@@ -127,18 +127,18 @@ class RouteController {
         const data = await response.json()
 
         // obtener cada id y convertirlo en array
-        this.routes = Object.values(data).map(route => route.id);
+        this.routes = data //Object.values(data).map(route => route.id);
     }
 
     initUI() {
         let routesContainer = document.getElementById("routes");
 
-        // Agregar checkboxes dinámicamente
-        this.routes.forEach(route => {
+        // Agregar checkboxes y numeros dinámicamente
+        Object.entries(this.routes).forEach(([route_key, route_values]) => {
             let routeDiv = document.createElement("div");
             routeDiv.classList.add("route");
             routeDiv.classList.add("route-img");
-            routeDiv.setAttribute("data-route", route);
+            routeDiv.setAttribute("data-route", route_key);
     
             // Cargar el SVG dinámicamente
             fetch("assets/RNX.svg")
@@ -150,9 +150,9 @@ class RouteController {
                     // Ahora sí puedes modificar el SVG
                     let textElement = routeDiv.querySelector("#numero-ruta-nacional");
                     if (textElement) {
-                        textElement.textContent = route;  // Modifica el texto dinámicamente
+                        textElement.textContent = route_values.number;  // Modifica el texto dinámicamente
                     }
-                    routeDiv.addEventListener("click", () => this.toggleRoute(routeDiv, route));
+                    routeDiv.addEventListener("click", () => this.toggleRoute(routeDiv, route_key));
                 })
                 .catch(error => console.error("Error cargando el SVG:", error));
             

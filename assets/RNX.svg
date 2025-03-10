@@ -20,6 +20,23 @@
   <style
    id="style6"
    type="text/css" />
+   <style type="text/css">
+    <!-- @import url('https://fonts.cdnfonts.com/css/highway-gothic'); -->
+@import url('https://fonts.cdnfonts.com/css/fhwaseriesb2024');
+ 
+   
+        .texto-principal {
+            font-style:normal;
+              font-weight:normal;
+    font-size:1em;
+    line-height:100%;
+     transform: scale(1.3, 0.8);
+    font-family:'', Courier;
+     letter-spacing:'1px';
+    fill:#000000;
+    text-anchor:middle;
+        }
+    </style>
  </defs>
  <g
    id="Ebene_x0020_1"
@@ -150,23 +167,9 @@
    id="path51"
    d="m 5438.259,974.02818 -126.3706,0 -50.3504,-100.32346 -229.852,0 -47.4112,100.32346 -123.5898,0 224.1314,-441.48031 123.0983,0 230.3437,441.48031 z m -213.9984,-174.63831 -79.123,-163.84632 -77.9759,163.84632 157.0991,0 z" />
 
-<text x="3000" y="3500"
-      font-family="Highway Gothic"
-      font-size="2000"
-      fill="black"
-      text-anchor="middle" style="display:none">
-    121
-</text>
 
-  
-<style>
-        .texto-principal {
-            font-style:normal;font-weight:normal;font-size:2000;line-height:125%;font-family:sans-serif;fill:#000000;fill-opacity:1;text-anchor:middle;
-        }
-    </style>
-
-    <text x="3000" y="4000" class="texto-principal" id="numero-ruta-nacional">
-        121
+    <text x="2400" y="5000" class="texto-principal" id="numero-ruta-nacional">
+        X
     </text>
   
 </g>

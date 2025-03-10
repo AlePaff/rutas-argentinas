@@ -10,6 +10,9 @@ body {
     height: 100vh;
 }
 
+
+
+
 /* Panel de control de rutas */
 #sidebar {
     width: 30%;
@@ -37,17 +40,17 @@ label {
 
 
 
-
+/* ===== ESTILOS DE LAS IMAGENES/ICONOS DE LAS RUTAS =====  */
 .route {
     display: inline-block;
-    margin: 4px;
+    margin: 0px;
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .route svg {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     transition: opacity 0.3s ease;
 }
 
