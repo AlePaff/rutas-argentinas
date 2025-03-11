@@ -156,7 +156,16 @@ class RouteController {
         });
 
         // listener para la busqueda
-        document.getElementById("search").addEventListener("input", (e) => this.filterRoutes(e.target.value));
+        document.getElementById("search-input").addEventListener("input", (e) => this.filterRoutes(e.target.value));
+
+        // si al buscar se presiona enter, se selecciona la primer ruta
+        document.getElementById("search-input").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                // primer elemennto con display != none
+                let firstRoute = Object.keys(this.routeElements).find(key => this.routeElements[key].style.display !== "none");
+                this.toggleRoute(this.routeElements[firstRoute], firstRoute);
+            }
+        });
 
     }
 
@@ -169,11 +178,8 @@ class RouteController {
             const matchesQuery = route_values.number.includes(lowerCaseQuery) ||
                                  route_values.name.toLowerCase().includes(lowerCaseQuery);
 
-            if (matchesQuery) {
-                routeDiv.style.display = ""; // Mostrar
-            } else {
-                routeDiv.style.display = "none"; // Ocultar
-            }
+            // Mostrar u ocultar según si coincide con la búsqueda
+            routeDiv.style.display = matchesQuery ? "" : "none";
         });
     }
 
