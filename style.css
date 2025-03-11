@@ -45,6 +45,13 @@ label {
     width: 100%;
 }
 
+.rutas-container{
+    border: var(--border-width) solid var(--dark-gray);
+    border-radius: var(--border-radius);
+    padding: 0.1em;
+    padding-top: 1em;
+}
+
 
 
 /* ===== ESTILOS DE LAS IMAGENES/ICONOS DE LAS RUTAS =====  */
@@ -92,13 +99,14 @@ html {
     --dark-gray: rgb(90, 90, 90);
     --light-gray: rgb(148, 148, 148);
     --focus-blue: rgb(69, 159, 189);
+    --border-radius: 1em;
+    --border-width: 2px;
   }
   
   .searchbox {
     --target-size: 48px; /* https://web.dev/accessible-tap-targets/ */
     --box-height: var(--target-size);
-    --border-radius: calc(var(--box-height) / 2);
-    --border-width: 2px;
+    /* --border-radius: calc(var(--box-height) / 2); */
     --icon-size: calc(var(--box-height) * 3/4 );
     --side-margin: calc(var(--border-radius) / 2);
     --icon-vertical-margin: calc( ( var(--box-height) - var(--icon-size) ) / 2 );
@@ -106,7 +114,8 @@ html {
   
   /* shaping the box */
   .searchbox {
-    margin: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 2em;
     height: var(--box-height);
     max-width: 561px; /* to follow the search box of google.com */
     z-index: 1;
@@ -185,9 +194,4 @@ html {
   }
   
   
-  /* Positioning the search box */
-  body .searchbox {
-    width: 90%;
-    margin: 0 auto;
-  }
   
