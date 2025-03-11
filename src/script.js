@@ -71,13 +71,6 @@ class RouteFetcher {
             return null;
         }
     }
-
-    setLocalRoute(route, data) {
-        if (data) {
-            localStorage.setItem(route, JSON.stringify(data));
-        }
-    }
-
     
     // Guardar datos en cache
     async saveToCache(routeId, data) {
@@ -117,6 +110,7 @@ class RouteController {
         this.mapManager = mapManager;
         this.routeFetcher = routeFetcher;
         this.routes = [];
+        this.routeElements = {};        // html de las rutas
 
         this.loadData().then(() => this.initUI());
     }
@@ -153,13 +147,36 @@ class RouteController {
                         textElement.textContent = route_values.number;  // Modifica el texto dinámicamente
                     }
                     routeDiv.addEventListener("click", () => this.toggleRoute(routeDiv, route_key));
+
+                    // Guardar referencia al elemento
+                    this.routeElements[route_key] = routeDiv;
                 })
                 .catch(error => console.error("Error cargando el SVG:", error));
             
         });
-    
+
+        // listener para la busqueda
+        document.getElementById("search").addEventListener("input", (e) => this.filterRoutes(e.target.value));
 
     }
+
+    // filtrar rutas con Fuse
+    filterRoutes(query) {
+        const lowerCaseQuery = query.toLowerCase();
+
+        Object.entries(this.routes).forEach(([route_key, route_values]) => {
+            const routeDiv = this.routeElements[route_key];
+            const matchesQuery = route_values.number.includes(lowerCaseQuery) ||
+                                 route_values.name.toLowerCase().includes(lowerCaseQuery);
+
+            if (matchesQuery) {
+                routeDiv.style.display = ""; // Mostrar
+            } else {
+                routeDiv.style.display = "none"; // Ocultar
+            }
+        });
+    }
+
 
     async toggleRoute(routeDiv, route) {
         routeDiv.classList.toggle("selected");

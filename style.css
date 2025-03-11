@@ -28,6 +28,7 @@ body {
 
 h3 {
     margin-top: 0;
+    text-align: center;
 }
 
 /* Checkbox estilizado */
@@ -37,6 +38,12 @@ label {
     cursor: pointer;
 }
 
+
+
+
+#imagen-fileteado{
+    width: 100%;
+}
 
 
 
