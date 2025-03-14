@@ -81,12 +81,39 @@ label {
     filter: grayscale(100%); /* Convertir la imagen a escala de grises */
 }
 
+/* al hacer over sobre el elemento */
+.route:hover svg {
+    opacity: 1; /* Imagen un poco más clara */
+}
+
 /* Animación suave cuando se hace click */
 .route.selected svg {
     opacity: 1; /* Restaurar la opacidad a su estado original */
     filter: none; /* Eliminar el filtro gris */
     transform: scale(1.1); /* Aumentar un poco la imagen al seleccionarla */
 }
+
+
+/* Animacion cuando esta cargando la ruta al clickear */
+@keyframes pulsante {
+  0% {
+      filter: grayscale(100%) opacity(0.5); /* Totalmente en escala de grises y ligeramente opaco */
+  }
+  50% {
+      filter: grayscale(100%) opacity(1); /* Menos escala de grises y mayor opacidad */
+  }
+  100% {
+      filter: grayscale(100%) opacity(0.5); /* Vuelve al estado inicial */
+  }
+}
+
+/* Estilo aplicado cuando el icono tiene la clase 'loading-route-icon' */
+.loading-route-icon {
+  animation: pulsante 0.5s infinite; /* Animación con duración de 1.5 segundos, repitiéndose infinitamente */
+}
+
+
+
 
 
 

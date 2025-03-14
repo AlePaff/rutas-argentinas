@@ -1,4 +1,3 @@
-
 /**
  * L = Leaflet library
  */
@@ -33,6 +32,16 @@ class MapManager {
         };
 
         this.updateRouteIcon(route);
+
+        this.map.whenReady(() => {
+            console.log(`Route ${route} has been fully loaded on the map.`);
+            // Change the route icon color dynamically
+            const routeDiv = document.querySelector(`[data-route="${route}"]`);
+            if (routeDiv) {
+                // delete class "loading-route-icon"
+                routeDiv.classList.remove("loading-route-icon");
+            }
+        });
     }
 
     updateRouteIcon(route) {
@@ -250,8 +259,9 @@ class RouteController {
     // mostrar u ocultar ruta
     async toggleRoute(routeDiv, routeNumber) {
         routeDiv.classList.toggle("selected");
-
+        
         if (routeDiv.classList.contains("selected")) {
+            routeDiv.classList.add("loading-route-icon");
             let data = await this.routeFetcher.getRoute(routeNumber);
             if (data) {
                 let geoJson = osmtogeojson(data);
