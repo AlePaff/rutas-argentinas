@@ -14,26 +14,83 @@ class MapManager {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(this.map);
+
         this.routeLayers = {}; // Almacena las capas de rutas activas
+        this.routeIcons = {};  // Almacena los iconos de las rutas
     }
 
+    //** 
+    // * 
+    // 
     drawRoute(route, geoJsonData) {
-        // Función para dibujar una ruta en el mapa
         const layer = L.geoJSON(geoJsonData, {
-            style: { 
-                color: "blue",
-                weight: 3 
-            }
+            style: { color: "blue", weight: 3 }
         }).addTo(this.map);
-        this.routeLayers[route] = layer;
+
+        this.routeLayers[route] = {
+            layer: layer,
+            coordinates: geoJsonData.features.flatMap(feature => feature.geometry.coordinates.map(coord => [coord[1], coord[0]])) // Convertir [lng, lat] -> [lat, lng]
+        };
+
+        this.updateRouteIcon(route);
     }
+
+    updateRouteIcon(route) {
+        // coloca el icono aproximadamente a la mitad de la ruta
+        // considera la mitad obteniendo el indice medio de la lista de coordenadas de la ruta
+        // ej) (1,0), (3,0), (20,0) -> (3,0) es el punto medio
+        if (!this.routeLayers[route]) return;
+
+        const bounds = this.map.getBounds();
+        const points = this.routeLayers[route].coordinates;
+
+        // Filtrar TODOS los puntos dentro del viewport actual
+        const visiblePoints = points.filter(([lat, lng]) => bounds.contains([lat, lng]));
+
+        if (visiblePoints.length > 0) {
+            // Calcular el punto medio de los visibles
+            let midIndex = Math.floor(visiblePoints.length / 2);
+            let midPoint = visiblePoints[midIndex];
+
+            // Si ya existe un icono, actualiza su posición
+            if (this.routeIcons[route]) {
+                this.routeIcons[route].setLatLng(midPoint);
+            } else {
+                // Crear un nuevo icono
+                const routeSvg = document.querySelector(`[data-route="${route}"] svg`).outerHTML;
+
+                const icon = L.divIcon({
+                    className: 'route-icon-map',
+                    html: routeSvg,  // Usa el SVG en lugar del emoji
+                    iconSize: [40, 40], // Ajusta el tamaño si es necesario
+                    iconAnchor: [20, 40]
+                });
+
+
+                const marker = L.marker(midPoint, { icon }).addTo(this.map);
+                this.routeIcons[route] = marker;
+            }
+        } else {
+            // Si la ruta está fuera de vista, ocultar el icono
+            if (this.routeIcons[route]) {
+                this.map.removeLayer(this.routeIcons[route]);
+                delete this.routeIcons[route];
+            }
+        }
+    }
+
 
     removeRoute(route) {
         if (this.routeLayers[route]) {
-            this.map.removeLayer(this.routeLayers[route]);
+            this.map.removeLayer(this.routeLayers[route].layer);
+            if (this.routeIcons[route]) {
+                this.map.removeLayer(this.routeIcons[route]);
+                delete this.routeIcons[route];
+            }
             delete this.routeLayers[route];
         }
     }
+
 }
 
 
@@ -61,6 +118,13 @@ class RouteFetcher {
             way["ref"="${route}"](${this.bbox});
             out geom;
         `;
+
+        // let query = `
+        // [out:json];
+        // area["name"="Córdoba"]->.searchArea;
+        // way["ref"~"RP.*"](area.searchArea);
+        // out geom;
+        // `
         let url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
 
         try {
@@ -169,7 +233,7 @@ class RouteController {
 
     }
 
-    // filtrar rutas con Fuse
+    // filtrar rutas (search box)
     filterRoutes(query) {
         const lowerCaseQuery = query.toLowerCase();
 
@@ -183,18 +247,18 @@ class RouteController {
         });
     }
 
-
-    async toggleRoute(routeDiv, route) {
+    // mostrar u ocultar ruta
+    async toggleRoute(routeDiv, routeNumber) {
         routeDiv.classList.toggle("selected");
 
         if (routeDiv.classList.contains("selected")) {
-            let data = await this.routeFetcher.getRoute(route);
+            let data = await this.routeFetcher.getRoute(routeNumber);
             if (data) {
                 let geoJson = osmtogeojson(data);
-                this.mapManager.drawRoute(route, geoJson);
+                this.mapManager.drawRoute(routeNumber, geoJson);
             }
         } else {
-            this.mapManager.removeRoute(route);
+            this.mapManager.removeRoute(routeNumber);
         }
     }
 
@@ -215,6 +279,8 @@ const routeFetcher = new RouteFetcher();
 const routeController = new RouteController(mapManager, routeFetcher);
 
 
-
-
+// actualizar iconos cuando se mueve o se hace zoom en el mapa
+mapManager.map.on('zoomend moveend', () => {
+    Object.keys(mapManager.routeLayers).forEach(route => mapManager.updateRouteIcon(route));
+});
 
