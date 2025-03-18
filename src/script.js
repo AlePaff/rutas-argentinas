@@ -122,9 +122,10 @@ class RouteFetcher {
         // let query = `[out:json]; relation(172947);(._;>;); out body;`;
 
         // equilibrio entre las dos, 'liviana' y mantenible. NOTE: Puede llegar a incluir rutas de paises vecinos o lo que sea que este viendo el usuario
+        // se fija que empiece con RN y cualquier combinación (ya que hay rutas marcadas como combinacion RN40|RN60)
         let query = `
-            [out:json];
-            way["ref"="${route}"](${this.bbox});
+            [out:json][bbox:${this.bbox}];
+            way["ref"~"^RN.*"]["ref"~"(^|;)${route}(;|$)"];
             out geom;
         `;
 
@@ -294,3 +295,9 @@ mapManager.map.on('zoomend moveend', () => {
     Object.keys(mapManager.routeLayers).forEach(route => mapManager.updateRouteIcon(route));
 });
 
+// evento que al clickear borra el caché
+document.getElementById("clear-cache").addEventListener("click", async () => {
+    const cache = await caches.open("routes-cache");
+    cache.keys().then(keys => keys.forEach(request => cache.delete(request)));
+    console.log("Cache cleared!");
+});

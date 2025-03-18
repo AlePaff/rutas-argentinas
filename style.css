@@ -113,6 +113,15 @@ label {
 }
 
 
+/* ==== Icono cache ===== */
+.icono {
+    display: flex;
+    cursor: pointer;
+}
+
+.icono span {
+    align-content: center;
+}
 
 
 
