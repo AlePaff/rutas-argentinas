@@ -326,12 +326,9 @@ class RouteController {
                 }
             });
 
-            // listener para el filtro de Vialidad Nacional
             this.classifyRoutesVialidad();
-            document.getElementById('todas').addEventListener('click', () => {
-                this.toggleRoutesFilter();
-            });
-
+            
+            // listener para el filtro de Vialidad Nacional
             document.getElementById('vialidad').addEventListener('click', () => {
                 this.toggleRoutesFilter();
             });
@@ -354,14 +351,14 @@ class RouteController {
 
     // clasificar rutas según vialidad nacional
     classifyRoutesVialidad() {
-        const routesFilterContainer = document.getElementById("routes_filter");
+        const routesFilterContainer = document.getElementById("routes");
         routesFilterContainer.innerHTML = ""; // Clear existing routes
 
         // Clasificar rutas según CLASIFICACION_RN
         Object.entries(CLASIFICACION_RN).forEach(([key, value]) => {
             // rutas dividades por secciones
             let section = document.createElement("div");
-            section.classList.add("route-section");
+            section.classList.add("route-classification");
             let title = document.createElement("h4");
             title.textContent = value.display_name;
             section.appendChild(title);
@@ -379,7 +376,7 @@ class RouteController {
             if(value.regiones){
                 Object.entries(value.regiones).forEach(([region_key, region_values]) => {
                     let regionSection = document.createElement("div");
-                    regionSection.classList.add("route-region");
+                    regionSection.classList.add("route-classification");
                     let regionTitle = document.createElement("h5");
                     regionTitle.textContent = region_values.display_name;
                     regionSection.appendChild(regionTitle);
@@ -400,19 +397,11 @@ class RouteController {
 
     // mostrar u ocultar filtro de clasificacion de rutas
     toggleRoutesFilter() {
-        const routesFilterDiv = document.getElementById('routes_filter');
-        const routesDiv = document.getElementById('routes');
-        // add or remove "selected-filter" class
-        routesFilterDiv.classList.toggle("selected-filter");
-        routesDiv.classList.toggle("selected-filter");
-
-        // if (routesFilterDiv.style.display === 'none' || routesFilterDiv.style.display === '') {
-        //     routesFilterDiv.style.display = 'block';
-        //     routesDiv.style.display = 'none';
-        // } else {
-        //     routesFilterDiv.style.display = 'none';
-        //     routesDiv.style.display = 'block';
-        // }
+        const routesDiv = document.getElementsByClassName("route-classification");
+        for (let i = 0; i < routesDiv.length; i++) {
+            routesDiv[i].classList.toggle("active");
+        }
+        
     }
 
     // mostrar u ocultar ruta

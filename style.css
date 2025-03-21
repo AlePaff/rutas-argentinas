@@ -135,7 +135,7 @@ label {
 
 
 
-/* ====== Filtros ========= */
+/* ====== Estilos de los filtros ======== */
 .route-section {
   margin-bottom: 20px;
 }
@@ -144,10 +144,21 @@ label {
   margin: 10px 0;
 }
 
-.selected-filter{
-  display: block;
+/* filtro desactivado */
+.route-classification{
+  display: contents;
+}
+.route-classification h4, .route-classification h5{
+  display: none;
 }
 
+/* filtro activado */
+.route-classification.active h4, .route-classification.active h5{
+  display: block;
+}
+.route-classification.active {
+  display: block;
+}
 
 
 
