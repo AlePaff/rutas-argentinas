@@ -135,6 +135,18 @@ label {
 
 
 
+/* ====== Filtros ========= */
+.route-section {
+  margin-bottom: 20px;
+}
+
+.route-section h4 {
+  margin: 10px 0;
+}
+
+
+
+
 
 /* ===== Search Bar ==== */
 /* Credito a MasaKudamatsu: https://medium.com/100-days-in-kyoto-to-create-a-web-app-with-google/day-17-styling-a-search-box-like-googles-e17dd9074abe */

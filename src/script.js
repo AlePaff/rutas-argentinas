@@ -1,7 +1,84 @@
 /**
  * L = Leaflet library
- */
+*/
 
+
+const CLASIFICACION_RN = {
+    radiales: {
+        "display_name": "Radiales",
+        "description": "Las rutas nacionales radiales son aquellas que parten de la Ciudad Autónoma de Buenos Aires y se dirigen hacia el interior del país.",
+        "rutas": [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+    },    
+    este_oeste: {
+        "display_name": "Este - Oeste",
+        "description": "Las rutas nacionales este-oeste son aquellas que conectan las costas del océano Atlántico con las del océano Pacífico.",
+        "rutas": [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+    },
+    norte_sur: {
+        "display_name": "Norte - Sur",
+        "description": "Las rutas nacionales norte-sur son aquellas que conectan la frontera norte con la frontera sur del país.",
+        "rutas": [32, 33, 34,35,36,37,38,39,40],
+    },
+    futuras_ampliaciones: {
+        "display_name": "Futuras ampliaciones",
+        "description": "Rutas nacionales que están proyectadas para ser construidas en el futuro.",
+        "rutas": [41,42,43,44,45,46,47,48,49,50],
+    },
+    regiones: {
+        "display_name": "Regiones",
+        "description": "Rutas nacionales que conectan diferentes regiones del país. De la 51 a la 300.",
+        "regiones": {
+            "region_1": {
+                "display_name": "Región 1",
+                "description": "",
+                "rutas": [51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80],
+                "provincias": ["Jujuy", "Salta", "Tucumán", "Catamarca", "La Rioja"],
+            },
+            "region_2": {
+                "display_name": "Región 2",
+                "description": "",
+                "rutas": [81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100],
+                "provincias": ["Formosa", "Chaco", "Santiago del Estero", "Norte de Santa Fe"],
+            },
+            "region_3": {
+                "display_name": "Región 3",
+                "description": "",
+                "rutas": [101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140],
+                "provincias": ["Misiones", "Corrientes", "Entre Ríos"],
+            },
+            "region_4": {
+                "display_name": "Región 4",
+                "description": "",
+                "rutas": [141,142,143,144,145,146,147,148,149,150,151,152,153,154,155],
+                "provincias": ["San Juan", "Mendoza", "San Luis", "La Pampa"],
+            },
+            "region_5": {
+                "display_name": "Región 5",
+                "description": "",
+                "rutas": [156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185],
+                "provincias": ["Córdoba", "Centro - Sur de Santa Fe"],
+            },
+            "region_6": {
+                "display_name": "Región 6",
+                "description": "",
+                "rutas": [186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230],
+                "provincias": ["Ciudad Autónoma de Buenos Aires", "Provincia de Buenos Aires"],
+            },            
+            "region_7": {
+                "display_name": "Región 7",
+                "description": "",
+                "rutas": [231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255],
+                "provincias": ["Neuquén", "Río Negro"],
+            },
+            "region_8": {
+                "display_name": "Región 8",
+                "description": "",
+                "rutas": [256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300],
+                "provincias": ["Chubut", "Santa Cruz", "Tierra del Fuego AIAS"],
+            }
+        }
+    }
+}
 
 
 
@@ -18,9 +95,6 @@ class MapManager {
         this.routeIcons = {};  // Almacena los iconos de las rutas
     }
 
-    //** 
-    // * 
-    // 
     drawRoute(route, geoJsonData) {
         const layer = L.geoJSON(geoJsonData, {
             style: { color: "blue", weight: 3 }
@@ -207,14 +281,19 @@ class RouteController {
             routeDiv.classList.add("route");
             routeDiv.classList.add("route-img");
             routeDiv.setAttribute("data-route", route_key);
-    
+
+            // Crear barra de carga
+            let loadingBar = document.createElement("div");
+            loadingBar.classList.add("loading-bar");
+            routeDiv.appendChild(loadingBar);
+
             // Cargar el SVG dinámicamente
             fetch("assets/RNX.svg")
                 .then(response => response.text())  // Convertir a texto
                 .then(svgData => {
                     routeDiv.innerHTML = svgData;  // Insertar el SVG en el div
                     routesContainer.appendChild(routeDiv);
-    
+
                     // Ahora sí puedes modificar el SVG
                     let textElement = routeDiv.querySelector("#numero-ruta-nacional");
                     if (textElement) {
@@ -226,7 +305,6 @@ class RouteController {
                     this.routeElements[route_key] = routeDiv;
                 })
                 .catch(error => console.error("Error cargando el SVG:", error));
-            
         });
 
         // listener para la busqueda
@@ -241,6 +319,9 @@ class RouteController {
             }
         });
 
+        // listener para el filtro de Vialidad Nacional
+        document.getElementById("vialidad").addEventListener("click", () => this.classifyRoutes("vialidad"));
+        document.getElementById("todas").addEventListener("click", () => this.classifyRoutes("todas"));
     }
 
     // filtrar rutas (search box)
@@ -255,6 +336,37 @@ class RouteController {
             // Mostrar u ocultar según si coincide con la búsqueda
             routeDiv.style.display = matchesQuery ? "" : "none";
         });
+    }
+
+    // clasificar rutas
+    classifyRoutes(type) {
+        const routesContainer = document.getElementById("routes_filter");
+        routesContainer.innerHTML = ""; // Clear existing routes
+
+        if (type === "todas") {
+            // Mostrar todas las rutas sin clasificar
+            Object.entries(this.routes).forEach(([route_key, route_values]) => {
+                routesContainer.appendChild(this.routeElements[route_key]);
+            });
+        } else if (type === "vialidad") {
+            // Clasificar rutas según CLASIFICACION_RN
+            Object.entries(CLASIFICACION_RN).forEach(([key, value]) => {
+                let section = document.createElement("div");
+                section.classList.add("route-section");
+                let title = document.createElement("h4");
+                title.textContent = value.display_name;
+                section.appendChild(title);
+
+                value.rutas.forEach(routeNumber => {
+                    let routeKey = Object.keys(this.routes).find(key => this.routes[key].number == routeNumber);
+                    if (routeKey) {
+                        section.appendChild(this.routeElements[routeKey]);
+                    }
+                });
+
+                routesContainer.appendChild(section);
+            });
+        }
     }
 
     // mostrar u ocultar ruta
@@ -301,3 +413,6 @@ document.getElementById("clear-cache").addEventListener("click", async () => {
     cache.keys().then(keys => keys.forEach(request => cache.delete(request)));
     console.log("Cache cleared!");
 });
+
+
+
