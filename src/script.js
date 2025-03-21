@@ -272,8 +272,11 @@ class RouteController {
         this.routes = data //Object.values(data).map(route => route.id);
     }
 
-    initUI() {
+    async initUI() {
         let routesContainer = document.getElementById("routes");
+
+        // Crear un array de promesas para esperar a que todos los SVG se carguen
+        let svgPromises = [];
 
         // Agregar checkboxes y numeros dinámicamente
         Object.entries(this.routes).forEach(([route_key, route_values]) => {
@@ -287,8 +290,8 @@ class RouteController {
             loadingBar.classList.add("loading-bar");
             routeDiv.appendChild(loadingBar);
 
-            // Cargar el SVG dinámicamente
-            fetch("assets/RNX.svg")
+            // Cargar el SVG dinámicamente y agregar la promesa al array
+            let svgPromise = fetch("assets/RNX.svg")
                 .then(response => response.text())  // Convertir a texto
                 .then(svgData => {
                     routeDiv.innerHTML = svgData;  // Insertar el SVG en el div
@@ -305,23 +308,34 @@ class RouteController {
                     this.routeElements[route_key] = routeDiv;
                 })
                 .catch(error => console.error("Error cargando el SVG:", error));
+
+            svgPromises.push(svgPromise);
         });
 
-        // listener para la busqueda
-        document.getElementById("search-input").addEventListener("input", (e) => this.filterRoutes(e.target.value));
+        // Esperar a que todas las promesas de SVG se resuelvan
+        Promise.all(svgPromises).then(() => {
+            // listener para la busqueda
+            document.getElementById("search-input").addEventListener("input", (e) => this.filterRoutes(e.target.value));
 
-        // si al buscar se presiona enter, se selecciona la primer ruta
-        document.getElementById("search-input").addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                // primer elemennto con display != none
-                let firstRoute = Object.keys(this.routeElements).find(key => this.routeElements[key].style.display !== "none");
-                this.toggleRoute(this.routeElements[firstRoute], firstRoute);
-            }
+            // si al buscar se presiona enter, se selecciona la primer ruta
+            document.getElementById("search-input").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    // primer elemennto con display != none
+                    let firstRoute = Object.keys(this.routeElements).find(key => this.routeElements[key].style.display !== "none");
+                    this.toggleRoute(this.routeElements[firstRoute], firstRoute);
+                }
+            });
+
+            // listener para el filtro de Vialidad Nacional
+            this.classifyRoutesVialidad();
+            document.getElementById('todas').addEventListener('click', () => {
+                this.toggleRoutesFilter();
+            });
+
+            document.getElementById('vialidad').addEventListener('click', () => {
+                this.toggleRoutesFilter();
+            });
         });
-
-        // listener para el filtro de Vialidad Nacional
-        document.getElementById("vialidad").addEventListener("click", () => this.classifyRoutes("vialidad"));
-        document.getElementById("todas").addEventListener("click", () => this.classifyRoutes("todas"));
     }
 
     // filtrar rutas (search box)
@@ -338,35 +352,67 @@ class RouteController {
         });
     }
 
-    // clasificar rutas
-    classifyRoutes(type) {
-        const routesContainer = document.getElementById("routes_filter");
-        routesContainer.innerHTML = ""; // Clear existing routes
+    // clasificar rutas según vialidad nacional
+    classifyRoutesVialidad() {
+        const routesFilterContainer = document.getElementById("routes_filter");
+        routesFilterContainer.innerHTML = ""; // Clear existing routes
 
-        if (type === "todas") {
-            // Mostrar todas las rutas sin clasificar
-            Object.entries(this.routes).forEach(([route_key, route_values]) => {
-                routesContainer.appendChild(this.routeElements[route_key]);
-            });
-        } else if (type === "vialidad") {
-            // Clasificar rutas según CLASIFICACION_RN
-            Object.entries(CLASIFICACION_RN).forEach(([key, value]) => {
-                let section = document.createElement("div");
-                section.classList.add("route-section");
-                let title = document.createElement("h4");
-                title.textContent = value.display_name;
-                section.appendChild(title);
+        // Clasificar rutas según CLASIFICACION_RN
+        Object.entries(CLASIFICACION_RN).forEach(([key, value]) => {
+            // rutas dividades por secciones
+            let section = document.createElement("div");
+            section.classList.add("route-section");
+            let title = document.createElement("h4");
+            title.textContent = value.display_name;
+            section.appendChild(title);
 
+            // clasificaciones normales
+            if(value.rutas){
                 value.rutas.forEach(routeNumber => {
                     let routeKey = Object.keys(this.routes).find(key => this.routes[key].number == routeNumber);
                     if (routeKey) {
                         section.appendChild(this.routeElements[routeKey]);
                     }
                 });
+            }
+            // clasificaciones por regiones
+            if(value.regiones){
+                Object.entries(value.regiones).forEach(([region_key, region_values]) => {
+                    let regionSection = document.createElement("div");
+                    regionSection.classList.add("route-region");
+                    let regionTitle = document.createElement("h5");
+                    regionTitle.textContent = region_values.display_name;
+                    regionSection.appendChild(regionTitle);
 
-                routesContainer.appendChild(section);
-            });
-        }
+                    region_values.rutas.forEach(routeNumber => {
+                        let routeKey = Object.keys(this.routes).find(key => this.routes[key].number == routeNumber);
+                        if (routeKey) {
+                            regionSection.appendChild(this.routeElements[routeKey]);
+                        }
+                    });
+                    section.appendChild(regionSection);
+                });
+            }
+            
+            routesFilterContainer.appendChild(section);
+        });
+    }
+
+    // mostrar u ocultar filtro de clasificacion de rutas
+    toggleRoutesFilter() {
+        const routesFilterDiv = document.getElementById('routes_filter');
+        const routesDiv = document.getElementById('routes');
+        // add or remove "selected-filter" class
+        routesFilterDiv.classList.toggle("selected-filter");
+        routesDiv.classList.toggle("selected-filter");
+
+        // if (routesFilterDiv.style.display === 'none' || routesFilterDiv.style.display === '') {
+        //     routesFilterDiv.style.display = 'block';
+        //     routesDiv.style.display = 'none';
+        // } else {
+        //     routesFilterDiv.style.display = 'none';
+        //     routesDiv.style.display = 'block';
+        // }
     }
 
     // mostrar u ocultar ruta
