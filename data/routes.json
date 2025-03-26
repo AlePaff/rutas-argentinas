@@ -1,487 +1,870 @@
 {
-    "RN1":{
+    "RN1": {
         "number": "1",
         "name": "Ruta Nacional RN1",
-        "relation": "168423"
+        "relation": "168423",
+        "provinces": [
+            "Buenos Aires",
+            "CABA"
+        ]
     },
-    "RN3":{
+    "RN3": {
         "number": "3",
         "name": "Ruta Nacional RN3",
-        "relation": "6461594"
+        "relation": "6461594",
+        "provinces": [
+            "Buenos Aires",
+            "Chubut",
+            "Río Negro",
+            "Santa Cruz",
+            "Tierra del Fuego"
+        ]
     },
-    "RN5":{
+    "RN5": {
         "number": "5",
         "name": "Ruta Nacional RN5",
-        "relation": "172941"
+        "relation": "172941",
+        "provinces": [
+            "Buenos Aires",
+            "La Pampa"
+        ]
     },
-    "RN7":{
+    "RN7": {
         "number": "7",
         "name": "Ruta Nacional RN7",
-        "relation": "172937"
+        "relation": "172937",
+        "provinces": [
+            "Buenos Aires",
+            "CABA",
+            "Córdoba",
+            "Mendoza",
+            "Santa Fe",
+            "San Luis"
+        ]
     },
-    "RN8":{
+    "RN8": {
         "number": "8",
         "name": "Ruta Nacional RN8",
-        "relation": "172947"
+        "relation": "172947",
+        "provinces": [
+            "Buenos Aires",
+            "Córdoba",
+            "San Luis",
+            "Santa Fe"
+        ]
     },
-    "RN9":{
+    "RN9": {
         "number": "9",
         "name": "Ruta Nacional RN9",
-        "relation": "3429120"
+        "relation": "3429120",
+        "provinces": [
+            "Buenos Aires",
+            "Córdoba",
+            "Jujuy",
+            "Salta",
+            "Santa Fe",
+            "Santiago del Estero",
+            "Tucumán"
+        ]
     },
-    "RN11":{
+    "RN11": {
         "number": "11",
         "name": "Ruta Nacional RN11",
-        "relation": "172949"
+        "relation": "172949",
+        "provinces": [
+            "Chaco",
+            "Formosa",
+            "Santa Fe"
+        ]
     },
-    "RN12":{
+    "RN12": {
         "number": "12",
         "name": "Ruta Nacional RN12",
-        "relation": "4455835"
+        "relation": "4455835",
+        "provinces": [
+            "Buenos Aires",
+            "Corrientes",
+            "Entre Ríos",
+            "Misiones"
+        ]
     },
-    "RN14":{
+    "RN14": {
         "number": "14",
         "name": "Ruta Nacional RN14",
-        "relation": "167867"
+        "relation": "167867",
+        "provinces": [
+            "Corrientes",
+            "Entre Ríos",
+            "Misiones"
+        ]
     },
-    "RN16":{
+    "RN16": {
         "number": "16",
         "name": "Ruta Nacional RN16",
-        "relation": "255430"
+        "relation": "255430",
+        "provinces": [
+            "Chaco",
+            "Corrientes",
+            "Salta",
+            "Santiago del Estero"
+        ]
     },
-    "RN18":{
+    "RN18": {
         "number": "18",
         "name": "Ruta Nacional RN18",
-        "relation": "1730111"
+        "relation": "1730111",
+        "provinces": [
+            "Entre Ríos"
+        ]
     },
-    "RN19":{
+    "RN19": {
         "number": "19",
         "name": "Ruta Nacional RN19",
-        "relation": "253512"
+        "relation": "253512",
+        "provinces": [
+            "Córdoba",
+            "Santa Fe"
+        ]
     },
-    "RN20":{
+    "RN20": {
         "number": "20",
         "name": "Ruta Nacional RN20",
-        "relation": "1282339"
+        "relation": "1282339",
+        "provinces": [
+            "Córdoba",
+            "San Juan",
+            "San Luis"
+        ]
     },
-    "RN22":{
+    "RN22": {
         "number": "22",
         "name": "Ruta Nacional RN22",
-        "relation": "269961"
+        "relation": "269961",
+        "provinces": [
+            "Buenos Aires",
+            "La Pampa",
+            "Neuquén",
+            "Río Negro"
+        ]
     },
-    "RN23":{
+    "RN23": {
         "number": "23",
         "name": "Ruta Nacional RN23",
-        "relation": "1619095"
+        "relation": "1619095",
+        "provinces": [
+            "Río Negro"
+        ]
     },
-    "RN25":{
+    "RN25": {
         "number": "25",
         "name": "Ruta Nacional RN25",
-        "relation": "1738538"
+        "relation": "1738538",
+        "provinces": [
+            "Chubut"
+        ]
     },
-    "RN26":{
+    "RN26": {
         "number": "26",
         "name": "Ruta Nacional RN26",
-        "relation": "1738540"
+        "relation": "1738540",
+        "provinces": [
+            "Chubut"
+        ]
     },
-    "RN33":{
+    "RN33": {
         "number": "33",
         "name": "Ruta Nacional RN33",
-        "relation": "1150388"
+        "relation": "1150388",
+        "provinces": [
+            "Buenos Aires",
+            "Córdoba",
+            "Santa Fe"
+        ]
     },
-    "RN34":{
+    "RN34": {
         "number": "34",
         "name": "Ruta Nacional RN34",
-        "relation": "269974"
+        "relation": "269974",
+        "provinces": [
+            "Jujuy",
+            "Salta",
+            "Santa Fe",
+            "Santiago del Estero",
+            "Tucumán"
+        ]
     },
-    "RN35":{
+    "RN35": {
         "number": "35",
         "name": "Ruta Nacional RN35",
-        "relation": "1282333"
+        "relation": "1282333",
+        "provinces": [
+            "Buenos Aires",
+            "Córdoba",
+            "La Pampa"
+        ]
     },
-    "RN36":{
+    "RN36": {
         "number": "36",
         "name": "Ruta Nacional RN36",
-        "relation": "1695956"
+        "relation": "1695956",
+        "provinces": [
+            "Córdoba"
+        ]
     },
-    "RN38":{
+    "RN38": {
         "number": "38",
         "name": "Ruta Nacional RN38",
-        "relation": "1179610"
+        "relation": "1179610",
+        "provinces": [
+            "Catamarca",
+            "Córdoba",
+            "La Rioja",
+            "Tucumán"
+        ]
     },
-    "RN40":{
+    "RN40": {
         "number": "40",
         "name": "Ruta Nacional RN40",
-        "relation": "168012"
+        "relation": "168012",
+        "provinces": [
+            "Catamarca",
+            "Chubut",
+            "Jujuy",
+            "La Rioja",
+            "Mendoza",
+            "Neuquén",
+            "Río Negro",
+            "San Juan",
+            "Salta",
+            "Santa Cruz",
+            "Tucumán"
+        ]
     },
-    "RN50":{
+    "RN50": {
         "number": "50",
         "name": "Ruta Nacional RN50",
-        "relation": "254276"
+        "relation": "254276",
+        "provinces": [
+            "Salta"
+        ]
     },
-    "RN51":{
+    "RN51": {
         "number": "51",
         "name": "Ruta Nacional RN51",
-        "relation": "1742787"
+        "relation": "1742787",
+        "provinces": [
+            "Jujuy",
+            "Salta"
+        ]
     },
-    "RN52":{
+    "RN52": {
         "number": "52",
         "name": "Ruta Nacional RN52",
-        "relation": "1745344"
+        "relation": "1745344",
+        "provinces": [
+            "Jujuy",
+            "Salta"
+        ]
     },
-    "RN60":{
+    "RN60": {
         "number": "60",
         "name": "Ruta Nacional RN60",
-        "relation": "274125"
+        "relation": "274125",
+        "provinces": [
+            "Catamarca",
+            "Córdoba",
+            "La Rioja"
+        ]
     },
-    "RN64":{
+    "RN64": {
         "number": "64",
         "name": "Ruta Nacional RN64",
-        "relation": "1746117"
+        "relation": "1746117",
+        "provinces": [
+            "Catamarca",
+            "Santiago del Estero",
+            "Tucumán"
+        ]
     },
-    "RN65":{
+    "RN65": {
         "number": "65",
         "name": "Ruta Nacional RN65",
-        "relation": "1746412"
+        "relation": "1746412",
+        "provinces": [
+            "Catamarca",
+            "Tucumán"
+        ]
     },
-    "RN66":{
+    "RN66": {
         "number": "66",
         "name": "Ruta Nacional RN66",
-        "relation": "1747258"
+        "relation": "1747258",
+        "provinces": [
+            "Jujuy"
+        ]
     },
-    "RN68":{
+    "RN68": {
         "number": "68",
         "name": "Ruta Nacional RN68",
-        "relation": "252550"
+        "relation": "252550",
+        "provinces": [
+            "Salta"
+        ]
     },
-    "RN74":{
+    "RN74": {
         "number": "74",
         "name": "Ruta Nacional RN74",
-        "relation": "1748599"
+        "relation": "1748599",
+        "provinces": [
+            "La Rioja"
+        ]
     },
-    "RN75":{
+    "RN75": {
         "number": "75",
         "name": "Ruta Nacional RN75",
-        "relation": "1748603"
+        "relation": "1748603",
+        "provinces": [
+            "La Rioja"
+        ]
     },
-    "RN76":{
+    "RN76": {
         "number": "76",
         "name": "Ruta Nacional RN76",
-        "relation": "1750495"
+        "relation": "1750495",
+        "provinces": [
+            "La Rioja",
+            "San Juan"
+        ]
     },
-    "RN77":{
+    "RN77": {
         "number": "77",
         "name": "Ruta Nacional RN77",
-        "relation": "1750868"
+        "relation": "1750868",
+        "provinces": [
+            "Córdoba",
+            "La Rioja"
+        ]
     },
-    "RN78":{
+    "RN78": {
         "number": "78",
         "name": "Ruta Nacional RN78",
-        "relation": "1751335"
+        "relation": "1751335",
+        "provinces": [
+            "La Rioja"
+        ]
     },
-    "RN79":{
+    "RN79": {
         "number": "79",
         "name": "Ruta Nacional RN79",
-        "relation": "1751580"
+        "relation": "1751580",
+        "provinces": [
+            "Catamarca",
+            "La Rioja",
+            "San Luis"
+        ]
     },
-    "RN81":{
+    "RN81": {
         "number": "81",
         "name": "Ruta Nacional RN81",
-        "relation": "1752120"
+        "relation": "1752120",
+        "provinces": [
+            "Formosa",
+            "Salta"
+        ]
     },
-    "RN86":{
+    "RN86": {
         "number": "86",
         "name": "Ruta Nacional RN86",
-        "relation": "1752446"
+        "relation": "1752446",
+        "provinces": [
+            "Formosa",
+            "Salta"
+        ]
     },
-    "RN89":{
+    "RN89": {
         "number": "89",
         "name": "Ruta Nacional RN89",
-        "relation": "1390083"
+        "relation": "1390083",
+        "provinces": [
+            "Chaco",
+            "Santiago del Estero"
+        ]
     },
-    "RN95":{
+    "RN95": {
         "number": "95",
         "name": "Ruta Nacional RN95",
-        "relation": "1687729"
+        "relation": "1687729",
+        "provinces": [
+            "Chaco",
+            "Formosa",
+            "Santa Fe"
+        ]
     },
-    "RN98":{
+    "RN98": {
         "number": "98",
         "name": "Ruta Nacional RN98",
-        "relation": "1753108"
+        "relation": "1753108",
+        "provinces": [
+            "Santa Fe",
+            "Santiago del Estero"
+        ]
     },
-    "RN101":{
+    "RN101": {
         "number": "101",
         "name": "Ruta Nacional RN101",
-        "relation": "1083191"
+        "relation": "1083191",
+        "provinces": [
+            "Misiones"
+        ]
     },
-    "RN105":{
+    "RN105": {
         "number": "105",
         "name": "Ruta Nacional RN105",
-        "relation": "3038712"
+        "relation": "3038712",
+        "provinces": [
+            "Misiones"
+        ]
     },
-    "RN117":{
+    "RN117": {
         "number": "117",
         "name": "Ruta Nacional RN117",
-        "relation": "5276162"
+        "relation": "5276162",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN118":{
+    "RN118": {
         "number": "118",
         "name": "Ruta Nacional RN118",
-        "relation": "1757091"
+        "relation": "1757091",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN119":{
+    "RN119": {
         "number": "119",
         "name": "Ruta Nacional RN119",
-        "relation": "1757991"
+        "relation": "1757991",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN120":{
+    "RN120": {
         "number": "120",
         "name": "Ruta Nacional RN120",
-        "relation": "1757998"
+        "relation": "1757998",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN121":{
+    "RN121": {
         "number": "121",
         "name": "Ruta Nacional RN121",
-        "relation": "1758011"
+        "relation": "1758011",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN122":{
+    "RN122": {
         "number": "122",
         "name": "Ruta Nacional RN122",
-        "relation": "1758022"
+        "relation": "1758022",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN123":{
+    "RN123": {
         "number": "123",
         "name": "Ruta Nacional RN123",
-        "relation": "1758259"
+        "relation": "1758259",
+        "provinces": [
+            "Corrientes"
+        ]
     },
-    "RN127":{
+    "RN127": {
         "number": "127",
         "name": "Ruta Nacional RN127",
-        "relation": "1759261"
+        "relation": "1759261",
+        "provinces": [
+            "Corrientes",
+            "Entre Ríos"
+        ]
     },
-    "RN130":{
+    "RN130": {
         "number": "130",
         "name": "Ruta Nacional RN130",
-        "relation": "1759267"
+        "relation": "1759267",
+        "provinces": [
+            "Entre Ríos"
+        ]
     },
-    "RN131":{
+    "RN131": {
         "number": "131",
         "name": "Ruta Nacional RN131",
-        "relation": "1760018"
+        "relation": "1760018",
+        "provinces": [
+            "Entre Ríos"
+        ]
     },
-    "RN135":{
+    "RN135": {
         "number": "135",
         "name": "Ruta Nacional RN135",
-        "relation": "1760037"
+        "relation": "1760037",
+        "provinces": [
+            "Entre Ríos"
+        ]
     },
-    "RN136":{
+    "RN136": {
         "number": "136",
         "name": "Ruta Nacional RN136",
-        "relation": "1762281"
+        "relation": "1762281",
+        "provinces": [
+            "Entre Ríos"
+        ]
     },
-    "RN141":{
+    "RN141": {
         "number": "141",
         "name": "Ruta Nacional RN141",
-        "relation": "2862946"
+        "relation": "2862946",
+        "provinces": [
+            "La Rioja",
+            "San Juan"
+        ]
     },
-    "RN142":{
+    "RN142": {
         "number": "142",
         "name": "Ruta Nacional RN142",
-        "relation": "1762791"
+        "relation": "1762791",
+        "provinces": [
+            "Mendoza",
+            "San Juan"
+        ]
     },
-    "RN143":{
+    "RN143": {
         "number": "143",
         "name": "Ruta Nacional RN143",
-        "relation": "1353023"
+        "relation": "1353023",
+        "provinces": [
+            "La Pampa",
+            "Mendoza"
+        ]
     },
-    "RN144":{
+    "RN144": {
         "number": "144",
         "name": "Ruta Nacional RN144",
-        "relation": "1763157"
+        "relation": "1763157",
+        "provinces": [
+            "Mendoza"
+        ]
     },
-    "RN145":{
+    "RN145": {
         "number": "145",
         "name": "Ruta Nacional RN145",
-        "relation": "1763206"
+        "relation": "1763206",
+        "provinces": [
+            "Mendoza"
+        ]
     },
-    "RN146":{
+    "RN146": {
         "number": "146",
         "name": "Ruta Nacional RN146",
-        "relation": "1353024"
+        "relation": "1353024",
+        "provinces": [
+            "Mendoza",
+            "San Luis"
+        ]
     },
-    "RN147":{
+    "RN147": {
         "number": "147",
         "name": "Ruta Nacional RN147",
-        "relation": "1763765"
+        "relation": "1763765",
+        "provinces": [
+            "San Luis"
+        ]
     },
-    "RN148":{
+    "RN148": {
         "number": "148",
         "name": "Ruta Nacional RN148",
-        "relation": "1766137"
+        "relation": "1766137",
+        "provinces": [
+            "Córdoba"
+        ]
     },
-    "RN149":{
+    "RN149": {
         "number": "149",
         "name": "Ruta Nacional RN149",
-        "relation": "1766147"
+        "relation": "1766147",
+        "provinces": [
+            "Mendoza",
+            "San Juan"
+        ]
     },
-    "RN150":{
+    "RN150": {
         "number": "150",
         "name": "Ruta Nacional RN150",
-        "relation": "1179628"
+        "relation": "1179628",
+        "provinces": [
+            "La Rioja",
+            "San Juan"
+        ]
     },
-    "RN151":{
+    "RN151": {
         "number": "151",
         "name": "Ruta Nacional RN151",
-        "relation": "1766928"
+        "relation": "1766928",
+        "provinces": [
+            "La Pampa",
+            "Río Negro"
+        ]
     },
-    "RN152":{
+    "RN152": {
         "number": "152",
         "name": "Ruta Nacional RN152",
-        "relation": "1768784"
+        "relation": "1768784",
+        "provinces": [
+            "La Pampa"
+        ]
     },
-    "RN153":{
+    "RN153": {
         "number": "153",
         "name": "Ruta Nacional RN153",
-        "relation": "5272857"
+        "relation": "5272857",
+        "provinces": [
+            "Mendoza",
+            "San Juan"
+        ]
     },
-    "RN154":{
+    "RN154": {
         "number": "154",
         "name": "Ruta Nacional RN154",
-        "relation": "1768842"
+        "relation": "1768842",
+        "provinces": [
+            "La Pampa"
+        ]
     },
-    "RN157":{
+    "RN157": {
         "number": "157",
         "name": "Ruta Nacional RN157",
-        "relation": "1179631"
+        "relation": "1179631",
+        "provinces": [
+            "Catamarca",
+            "Santiago del Estero",
+            "Tucumán"
+        ]
     },
-    "RN158":{
+    "RN158": {
         "number": "158",
         "name": "Ruta Nacional RN158",
-        "relation": "1769961"
+        "relation": "1769961",
+        "provinces": [
+            "Córdoba"
+        ]
     },
-    "RN168":{
+    "RN168": {
         "number": "168",
         "name": "Ruta Nacional RN168",
-        "relation": "1282284"
+        "relation": "1282284",
+        "provinces": [
+            "Entre Ríos",
+            "Santa Fe"
+        ]
     },
-    "RN173":{
+    "RN173": {
         "number": "173",
         "name": "Ruta Nacional RN173",
-        "relation": "7128945"
+        "relation": "7128945",
+        "provinces": [
+            "Santa Fe"
+        ]
     },
-    "RN174":{
+    "RN174": {
         "number": "174",
         "name": "Ruta Nacional RN174",
-        "relation": "1769982"
+        "relation": "1769982",
+        "provinces": [
+            "Entre Ríos",
+            "Santa Fe"
+        ]
     },
-    "RN175":{
+    "RN175": {
         "number": "175",
         "name": "Ruta Nacional RN175",
-        "relation": "1769987"
+        "relation": "1769987",
+        "provinces": [
+            "Santa Fe"
+        ]
     },
-    "RN177":{
+    "RN177": {
         "number": "177",
         "name": "Ruta Nacional RN177",
-        "relation": "1769988"
+        "relation": "1769988",
+        "provinces": [
+            "Santa Fe"
+        ]
     },
-    "RN178":{
+    "RN178": {
         "number": "178",
         "name": "Ruta Nacional RN178",
-        "relation": "1355977"
+        "relation": "1355977",
+        "provinces": [
+            "Buenos Aires",
+            "Santa Fe"
+        ]
     },
-    "RN188":{
+    "RN188": {
         "number": "188",
         "name": "Ruta Nacional RN188",
-        "relation": "1770473"
+        "relation": "1770473",
+        "provinces": [
+            "Buenos Aires",
+            "La Pampa",
+            "San Luis",
+            "Mendoza"
+        ]
     },
-    "RN193":{
+    "RN193": {
         "number": "193",
         "name": "Ruta Nacional RN193",
-        "relation": "1770476"
+        "relation": "1770476",
+        "provinces": [
+            "Buenos Aires"
+        ]
     },
-    "RN205":{
+    "RN205": {
         "number": "205",
         "name": "Ruta Nacional RN205",
-        "relation": "1375000"
+        "relation": "1375000",
+        "provinces": [
+            "Buenos Aires"
+        ]
     },
-    "RN226":{
+    "RN226": {
         "number": "226",
         "name": "Ruta Nacional RN226",
-        "relation": "1773880"
+        "relation": "1773880",
+        "provinces": [
+            "Buenos Aires"
+        ]
     },
-    "RN228":{
+    "RN228": {
         "number": "228",
         "name": "Ruta Nacional RN228",
-        "relation": "1774648"
+        "relation": "1774648",
+        "provinces": [
+            "Buenos Aires"
+        ]
     },
-    "RN231":{
+    "RN231": {
         "number": "231",
         "name": "Ruta Nacional RN231",
-        "relation": "1774670"
+        "relation": "1774670",
+        "provinces": [
+            "Neuquén"
+        ]
     },
-    "RN232":{
+    "RN232": {
         "number": "232",
         "name": "Ruta Nacional RN232",
-        "relation": "1775350"
+        "relation": "1775350",
+        "provinces": [
+            "La Pampa",
+            "Río Negro"
+        ]
     },
-    "RN234":{
+    "RN234": {
         "number": "234",
         "name": "Ruta Nacional RN234",
-        "relation": "1276844"
+        "relation": "1276844",
+        "provinces": [
+            "Neuquén"
+        ]
     },
-    "RN237":{
+    "RN237": {
         "number": "237",
         "name": "Ruta Nacional RN237",
-        "relation": "1775375"
+        "relation": "1775375",
+        "provinces": [
+            "Neuquén"
+        ]
     },
-    "RN242":{
+    "RN242": {
         "number": "242",
         "name": "Ruta Nacional RN242",
-        "relation": "1776991"
+        "relation": "1776991",
+        "provinces": [
+            "Neuquén"
+        ]
     },
-    "RN249":{
+    "RN249": {
         "number": "249",
         "name": "Ruta Nacional RN249",
-        "relation": "1776993"
+        "relation": "1776993",
+        "provinces": [
+            "Buenos Aires"
+        ]
     },
-    "RN250":{
+    "RN250": {
         "number": "250",
         "name": "Ruta Nacional RN250",
-        "relation": "1777004"
+        "relation": "1777004",
+        "provinces": [
+            "Río Negro"
+        ]
     },
-    "RN251":{
+    "RN251": {
         "number": "251",
         "name": "Ruta Nacional RN251",
-        "relation": "1777007"
+        "relation": "1777007",
+        "provinces": [
+            "Río Negro"
+        ]
     },
-    "RN252":{
+    "RN252": {
         "number": "252",
         "name": "Ruta Nacional RN252",
-        "relation": "1777008"
+        "relation": "1777008",
+        "provinces": [
+            "Buenos Aires"
+        ]
     },
-    "RN259":{
+    "RN259": {
         "number": "259",
         "name": "Ruta Nacional RN259",
-        "relation": "1777532"
+        "relation": "1777532",
+        "provinces": [
+            "Chubut"
+        ]
     },
-    "RN260":{
+    "RN260": {
         "number": "260",
         "name": "Ruta Nacional RN260",
-        "relation": "1777545"
+        "relation": "1777545",
+        "provinces": [
+            "Chubut"
+        ]
     },
-    "RN281":{
+    "RN281": {
         "number": "281",
         "name": "Ruta Nacional RN281",
-        "relation": "1777554"
+        "relation": "1777554",
+        "provinces": [
+            "Santa Cruz"
+        ]
     },
-    "RN288":{
+    "RN288": {
         "number": "288",
         "name": "Ruta Nacional RN288",
-        "relation": "1777566"
+        "relation": "1777566",
+        "provinces": [
+            "Santa Cruz"
+        ]
     },
-    "RN293":{
+    "RN293": {
         "number": "293",
         "name": "Ruta Nacional RN293",
-        "relation": "1777578"
+        "relation": "1777578",
+        "provinces": [
+            "Santa Cruz"
+        ]
     }
 }

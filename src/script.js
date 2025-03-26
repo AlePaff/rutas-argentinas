@@ -3,6 +3,16 @@
 */
 
 
+
+const PROVINCIAS = {
+    "Buenos Aires": {
+        "display_name": "Buenos Aires",
+        "relation_id": 172947,
+    }
+}
+
+
+
 const CLASIFICACION_RN = {
     radiales: {
         "display_name": "Radiales",
@@ -30,49 +40,49 @@ const CLASIFICACION_RN = {
         "regiones": {
             "region_1": {
                 "display_name": "Región 1",
-                "description": "",
+                "description": "Zona Andina del Norte, (Jujuy, Salta, Catamarca, Tucumán, La Rioja). Números del 51 al 80.",
                 "rutas": [51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80],
                 "provincias": ["Jujuy", "Salta", "Tucumán", "Catamarca", "La Rioja"],
             },
             "region_2": {
                 "display_name": "Región 2",
-                "description": "",
+                "description": "Región Chaqueña, (Formosa, Chaco, Santiago del Estero, Santa Fe norte). Números del 81 al 100.",
                 "rutas": [81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100],
                 "provincias": ["Formosa", "Chaco", "Santiago del Estero", "Norte de Santa Fe"],
             },
             "region_3": {
                 "display_name": "Región 3",
-                "description": "",
+                "description": "Mesopotámica, (Entre Ríos, Corrientes Misiones). Números del 101 al 140.",
                 "rutas": [101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140],
                 "provincias": ["Misiones", "Corrientes", "Entre Ríos"],
             },
             "region_4": {
                 "display_name": "Región 4",
-                "description": "",
+                "description": "Cuyo y La Pampa, (San Juan, Mendoza, San Luis y La Pampa). Números del 141 al 155.",
                 "rutas": [141,142,143,144,145,146,147,148,149,150,151,152,153,154,155],
                 "provincias": ["San Juan", "Mendoza", "San Luis", "La Pampa"],
             },
             "region_5": {
                 "display_name": "Región 5",
-                "description": "",
+                "description": "Centro, (Córdoba, centro y sur de Santa Fe) : Números del 156 al 185.",
                 "rutas": [156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185],
                 "provincias": ["Córdoba", "Centro - Sur de Santa Fe"],
             },
             "region_6": {
                 "display_name": "Región 6",
-                "description": "",
+                "description": "Capital Federal y Buenos Aires. Números del 186 al 230.",
                 "rutas": [186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230],
                 "provincias": ["Ciudad Autónoma de Buenos Aires", "Provincia de Buenos Aires"],
             },            
             "region_7": {
                 "display_name": "Región 7",
-                "description": "",
+                "description": "Neuquén y Río Negro. Números del 231 al 255.",
                 "rutas": [231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255],
                 "provincias": ["Neuquén", "Río Negro"],
             },
             "region_8": {
                 "display_name": "Región 8",
-                "description": "",
+                "description": "Chubut, Santa Cruz y Tierra del Fuego. Números del 256 al 300.",
                 "rutas": [256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300],
                 "provincias": ["Chubut", "Santa Cruz", "Tierra del Fuego AIAS"],
             }
@@ -336,13 +346,23 @@ class RouteController {
     }
 
     // filtrar rutas (search box)
+    // "RN26": {
+    //     "number": "26",
+    //     "name": "Ruta Nacional RN26",
+    //     "relation": "1738540",
+    //     "provinces": [
+    //         "Chubut"
+    //     ]
+    // },
     filterRoutes(query) {
         const lowerCaseQuery = query.toLowerCase();
 
         Object.entries(this.routes).forEach(([route_key, route_values]) => {
             const routeDiv = this.routeElements[route_key];
-            const matchesQuery = route_values.number.includes(lowerCaseQuery) ||
-                                 route_values.name.toLowerCase().includes(lowerCaseQuery);
+            const matchesQuery = route_values.number.includes(lowerCaseQuery) ||        // buscar por numero
+                                 route_values.name.toLowerCase().includes(lowerCaseQuery) ||        // por nombre
+                                 // si contiene el nombre de una provincia
+                                    route_values.provinces.some(province => province.toLowerCase().includes(lowerCaseQuery));
 
             // Mostrar u ocultar según si coincide con la búsqueda
             routeDiv.style.display = matchesQuery ? "" : "none";
