@@ -32,7 +32,7 @@ h3 {
 }
 
 /* Checkbox estilizado */
-label {
+.checkbox-label {
     display: block;
     margin: 5px 0;
     cursor: pointer;
