@@ -96,11 +96,7 @@ export class MapManager {
 
     drawRegion(region_key, region_data, geoJsonData) {
         // filtrar puntos. Quedarse solo con los poligonos
-        console.log("region_data.display_name", region_data.display_name)
-        console.log("sin filtrar", geoJsonData.features)
         let filteredGeoJsonData = geoJsonData.features.filter(feature => feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon");
-        console.log("filtrado", filteredGeoJsonData)
-        
         
         const layer = L.geoJSON(filteredGeoJsonData, {
             style: { 
@@ -121,32 +117,29 @@ export class MapManager {
         };
 
         // Calcular el centroide del conjunto de polígonos
-        const centroide = this.calculateCentroid(filteredGeoJsonData);
-        console.log("centroide", centroide)
+        const centroide = region_data.title_coords;
         
-        if (centroide) {
-            // Agregar un marcador con texto en el centroide. Tambien dibujar punto
-            displayRegionName = L.marker(centroide, {
-                icon: L.divIcon({
-                    className: "region-label",
-                    html: `<div>${region_data.display_name}</div>`,
-                    iconSize: [100, 30], // Tamaño del cuadro de texto
-                    iconAnchor: [0, 0] // Centramos el texto en el punto
-                })
-            }).addTo(this.map);
+        // Agregar un marcador con texto en el centroide. Tambien dibujar punto
+        displayRegionName = L.marker(centroide, {
+            icon: L.divIcon({
+                className: "region-label",
+                html: `<div>${region_data.display_name}</div>`,
+                iconSize: [100, 30], // Tamaño del cuadro de texto
+                iconAnchor: [0, 0] // Centramos el texto en el punto
+            })
+        }).addTo(this.map);
 
-            
-            this.regionLayers[region_key].centroid = displayRegionName;
+        
+        this.regionLayers[region_key].centroid = displayRegionName;
 
-            // dibujar punto en color rojo
-            L.circle(centroide, {
-                color: 'blue',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: 100
-            }).addTo(this.map);
+        // dibujar punto en color rojo
+        L.circle(centroide, {
+            color: 'blue',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 100
+        }).addTo(this.map);
 
-        }
 
 
 
@@ -160,24 +153,6 @@ export class MapManager {
         this.map.whenReady(() => {
             console.log(`Finalizado region.`);
         });
-    }
-
-
-    // Función para calcular el centroide de múltiples polígonos
-    calculateCentroid(geoJsonFeatures) {
-        let totalLat = 0, totalLng = 0, count = 0;
-
-        geoJsonFeatures.forEach(feature => {
-            let coordinates = feature.geometry.coordinates[0]; // Obtener el primer anillo del polígono
-            coordinates.forEach(coord => {
-                totalLat += coord[1]; // Leaflet usa [lat, lng]
-                totalLng += coord[0];
-                count++;
-            });
-        });
-
-        if (count === 0) return null;
-        return [totalLat / count, totalLng / count]; // Promedio de coordenadas
     }
 
 

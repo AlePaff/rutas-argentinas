@@ -148,6 +148,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#e3ffe3",
+                "title_coords": [-25.2049, -66.1377],
             },
             "region_2": {
                 "display_name": "II - Región 2",
@@ -165,6 +166,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#ffeec0",
+                "title_coords": [-28.0720, -61.6333],
             },
             "region_3": {
                 "display_name": "III - Región 3",
@@ -181,6 +183,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#ffe3e3",
+                "title_coords": [-28.2463, -57.2388],
             },
             "region_4": {
                 "display_name": "Región 4",
@@ -198,6 +201,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#e3e3ff",
+                "title_coords": [-34.1436, -67.2363],
             },
             "region_5": {
                 "display_name": "Región 5",
@@ -213,6 +217,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#ffffd0",
+                "title_coords": [-31.8402, -62.1606],
             },
             "region_6": {
                 "display_name": "Región 6",
@@ -227,6 +232,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#ffeec0",
+                "title_coords": [-36.4566, -60.0513],
             },            
             "region_7": {
                 "display_name": "Región 7",
@@ -242,6 +248,7 @@ const CLASIFICACION_RN = {
                     out geom;
                 `,
                 "region_color": "#ffceff",
+                "title_coords": [-40.1117, -68.1592],
             },
             "region_8": {
                 "display_name": "Región 8",
@@ -251,13 +258,14 @@ const CLASIFICACION_RN = {
                 "osm_query": `
                     [out:json][bbox:${BBOX_ARG}];
                     (
-                        relation["admin_level"="4"]["boundary"="administrative"]["name"="Chubut"];
-                        relation["admin_level"="4"]["boundary"="administrative"]["ref"="SC"];
+                        relation["admin_level"="4"]["boundary"="administrative"]["ref"="CHB"];
+                        relation["admin_level"="4"]["boundary"="administrative"]["name"="Santa Cruz"];
                         relation["admin_level"="4"]["boundary"="administrative"]["ref"="TDF"];
                     );
                     out geom;
                 `,
                 "region_color": "#ceeef3",
+                "title_coords": [-49.1242, -70.5542],
             }
         }
     }
