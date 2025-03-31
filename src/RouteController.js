@@ -161,16 +161,16 @@ export class RouteController {
     }
 
     // mostrar regiones en el mapa
-    toggleRegionDisplay(vialidadCheckboxDiv){
+    async toggleRegionDisplay(vialidadCheckboxDiv){
         // mostrar todas las regiones en el mapa con distintos colores
         // iterar CLASIFICACION_RN.regiones.regiones y obtene la query de cada uno
         vialidadCheckboxDiv.classList.toggle("selected");
         
         if(vialidadCheckboxDiv.classList.contains("selected")){
-            Object.entries(CLASIFICACION_RN.regiones.regiones).forEach(async ([region_key, region_values]) => {
-                console.log("region_key", region_key);
-                console.log("region_values", region_values);
+            let groupRegionLayers = []
 
+            // obtener layers
+            for (const [region_key, region_values] of Object.entries(CLASIFICACION_RN.regiones.regiones)) {
                 // si no hay data saltea
                 if(region_values.osm_query.length == 0){
                     return;
@@ -180,9 +180,26 @@ export class RouteController {
                 let data = await this.routeFetcher.getRegion(region_key, query);
                 if (data) {
                     let geoJson = osmtogeojson(data);
-                    this.mapManager.drawRegion(region_key, region_values, geoJson);
+                    
+                    let regionLayers = this.mapManager.calculateRegion(region_values, geoJson);
+                    // iterar cada elemento del array y agregar
+                    for (const regionLayer of regionLayers) {
+                        groupRegionLayers.push(regionLayer);
+                    }
                 }
-            });
+                
+            };
+            groupRegionLayers = await Promise.all(groupRegionLayers);
+
+
+            // agrupar y mostrar regiones
+            let regionGroup = L.layerGroup(groupRegionLayers);
+            regionGroup.addTo(this.mapManager.map);
+
+            // cuando termine de dibujar mandar por consola
+            console.log("Regiones cargadas en el mapa");
+
+
         } else {
             // borrar todas las regiones
             this.mapManager.removeRegions();

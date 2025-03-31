@@ -91,14 +91,11 @@ export class MapManager {
         }
     }
 
-
-
-
-    drawRegion(region_key, region_data, geoJsonData) {
+    calculateRegion(region_data, geoJsonData) {
         // filtrar puntos. Quedarse solo con los poligonos
         let filteredGeoJsonData = geoJsonData.features.filter(feature => feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon");
         
-        const layer = L.geoJSON(filteredGeoJsonData, {
+        let regionLayer = L.geoJSON(filteredGeoJsonData, {
             style: { 
                 // stroke options
                 color: region_data.region_color,
@@ -108,51 +105,29 @@ export class MapManager {
                 // fill options
                 fillOpacity: 0.5,
             }
-        }).addTo(this.map);
+        })
 
-        // agregar a la lista de regiones
-        this.regionLayers[region_key] = {
-            layer: layer,
-            coordinates: filteredGeoJsonData.flatMap(feature => feature.geometry.coordinates.map(coord => [coord[1], coord[0]])) // Convertir [lng, lat] -> [lat, lng]
-        };
-
-        // Calcular el centroide del conjunto de polígonos
         const centroide = region_data.title_coords;
         
         // Agregar un marcador con texto en el centroide. Tambien dibujar punto
-        displayRegionName = L.marker(centroide, {
+        let regionName = L.marker(centroide, {
             icon: L.divIcon({
                 className: "region-label",
                 html: `<div>${region_data.display_name}</div>`,
                 iconSize: [100, 30], // Tamaño del cuadro de texto
                 iconAnchor: [0, 0] // Centramos el texto en el punto
             })
-        }).addTo(this.map);
-
-        
-        this.regionLayers[region_key].centroid = displayRegionName;
+        })
 
         // dibujar punto en color rojo
-        L.circle(centroide, {
+        let regionCircle = L.circle(centroide, {
             color: 'blue',
             fillColor: '#f03',
             fillOpacity: 0.5,
             radius: 100
-        }).addTo(this.map);
-
-
-
-
-        // this.routeLayers[region_id] = {
-        //     layer: layer,
-        //     coordinates: geoJsonData.features.flatMap(feature => feature.geometry.coordinates.map(coord => [coord[1], coord[0]])) // Convertir [lng, lat] -> [lat, lng]
-        // };
-
-        // this.updateRouteIcon(region_id);
-
-        this.map.whenReady(() => {
-            console.log(`Finalizado region.`);
-        });
+        })
+        
+        return [regionLayer, regionName, regionCircle]
     }
 
 
