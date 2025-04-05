@@ -1,108 +1,108 @@
 const BBOX_ARG = '-55.2,-73.6,-21.8,-53.6';
 
-const PROVINCIAS = {
-    "Jujuy": {
-        "display_name": "Jujuy",
-        "relation_id": 172947,
-    },
-    "Salta": {
-        "display_name": "Salta",
-        "relation_id": 172947,
-    },
-    "Tucumán": {
-        "display_name": "Tucumán",
-        "relation_id": 172947,
-    },
-    "Catamarca": {
-        "display_name": "Catamarca",
-        "relation_id": 172947,
-    },
-    "La Rioja": {
-        "display_name": "La Rioja",
-        "relation_id": 172947,
-    },
-    "Formosa": {
-        "display_name": "Formosa",
-        "relation_id": 172947,
-    },
-    "Chaco": {
-        "display_name": "Chaco",
-        "relation_id": 172947,
-    },
-    "Santiago del Estero": {
-        "display_name": "Santiago del Estero",
-        "relation_id": 172947,
-    },
-    "Norte de Santa Fe": {
-        "display_name": "Norte de Santa Fe",
-        "relation_id": 172947,
-    },
-    "Misiones": {
-        "display_name": "Misiones",
-        "relation_id": 172947,
-    },
-    "Corrientes": {
-        "display_name": "Corrientes",
-        "relation_id": 172947,
-    },
-    "Entre Ríos": {
-        "display_name": "Entre Ríos",
-        "relation_id": 172947,
-    },
-    "San Juan": {
-        "display_name": "San Juan",
-        "relation_id": 172947,
-    },
-    "Mendoza": {
-        "display_name": "Mendoza",
-        "relation_id": 172947,
-    },
-    "San Luis": {
-        "display_name": "San Luis",
-        "relation_id": 172947,
-    },
-    "La Pampa": {
-        "display_name": "La Pampa",
-        "relation_id": 172947,
-    },
-    "Córdoba": {
-        "display_name": "Córdoba",
-        "relation_id": 172947,
-    },
-    "Centro - Sur de Santa Fe": {
-        "display_name": "Centro - Sur de Santa Fe",
-        "relation_id": 172947,
-    },
-    "Ciudad Autónoma de Buenos Aires": {
-        "display_name": "Ciudad Autónoma de Buenos Aires",
-        "relation_id": 172947,
-    },
-    "Buenos Aires": {
-        "display_name": "Buenos Aires",
-        "relation_id": 172947,
-        "alt_names": ["Provincia de Buenos Aires"],
-    },
-    "Neuquén": {
-        "display_name": "Neuquén",
-        "relation_id": 172947,
-    },
-    "Río Negro": {
-        "display_name": "Río Negro",
-        "relation_id": 123,
-    },
-    "Chubut": {
-        "display_name": "Chubut",
-        "relation_id": 1234,
-    },
-    "Santa Cruz": {
-        "display_name": "Santa Cruz",
-        "relation_id": 1234,
-    },
-    "Tierra del Fuego": {
-        "display_name": "Tierra del Fuego",
-        "relation_id": 1234,
-    },
-}
+// const PROVINCIAS = {
+//     "Jujuy": {
+//         "display_name": "Jujuy",
+//         "relation_id": 172947,
+//     },
+//     "Salta": {
+//         "display_name": "Salta",
+//         "relation_id": 172947,
+//     },
+//     "Tucumán": {
+//         "display_name": "Tucumán",
+//         "relation_id": 172947,
+//     },
+//     "Catamarca": {
+//         "display_name": "Catamarca",
+//         "relation_id": 172947,
+//     },
+//     "La Rioja": {
+//         "display_name": "La Rioja",
+//         "relation_id": 172947,
+//     },
+//     "Formosa": {
+//         "display_name": "Formosa",
+//         "relation_id": 172947,
+//     },
+//     "Chaco": {
+//         "display_name": "Chaco",
+//         "relation_id": 172947,
+//     },
+//     "Santiago del Estero": {
+//         "display_name": "Santiago del Estero",
+//         "relation_id": 172947,
+//     },
+//     "Norte de Santa Fe": {
+//         "display_name": "Norte de Santa Fe",
+//         "relation_id": 172947,
+//     },
+//     "Misiones": {
+//         "display_name": "Misiones",
+//         "relation_id": 172947,
+//     },
+//     "Corrientes": {
+//         "display_name": "Corrientes",
+//         "relation_id": 172947,
+//     },
+//     "Entre Ríos": {
+//         "display_name": "Entre Ríos",
+//         "relation_id": 172947,
+//     },
+//     "San Juan": {
+//         "display_name": "San Juan",
+//         "relation_id": 172947,
+//     },
+//     "Mendoza": {
+//         "display_name": "Mendoza",
+//         "relation_id": 172947,
+//     },
+//     "San Luis": {
+//         "display_name": "San Luis",
+//         "relation_id": 172947,
+//     },
+//     "La Pampa": {
+//         "display_name": "La Pampa",
+//         "relation_id": 172947,
+//     },
+//     "Córdoba": {
+//         "display_name": "Córdoba",
+//         "relation_id": 172947,
+//     },
+//     "Centro - Sur de Santa Fe": {
+//         "display_name": "Centro - Sur de Santa Fe",
+//         "relation_id": 172947,
+//     },
+//     "Ciudad Autónoma de Buenos Aires": {
+//         "display_name": "Ciudad Autónoma de Buenos Aires",
+//         "relation_id": 172947,
+//     },
+//     "Buenos Aires": {
+//         "display_name": "Buenos Aires",
+//         "relation_id": 172947,
+//         "alt_names": ["Provincia de Buenos Aires"],
+//     },
+//     "Neuquén": {
+//         "display_name": "Neuquén",
+//         "relation_id": 172947,
+//     },
+//     "Río Negro": {
+//         "display_name": "Río Negro",
+//         "relation_id": 123,
+//     },
+//     "Chubut": {
+//         "display_name": "Chubut",
+//         "relation_id": 1234,
+//     },
+//     "Santa Cruz": {
+//         "display_name": "Santa Cruz",
+//         "relation_id": 1234,
+//     },
+//     "Tierra del Fuego": {
+//         "display_name": "Tierra del Fuego",
+//         "relation_id": 1234,
+//     },
+// }
 
 
 

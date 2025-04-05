@@ -5,6 +5,8 @@ export class RouteController {
         this.routeFetcher = routeFetcher;
         this.routes = [];
         this.routeElements = {};        // html de las rutas
+        this.controlRegiones = null;    // control de regiones
+        this.layerRegionGroup = null; // capa de regiones
 
         this.loadData().then(() => this.initUI());
     }
@@ -81,6 +83,51 @@ export class RouteController {
                 this.toggleRegionDisplay(vialidadCheckbox);
             });
         });
+
+
+        
+        this.initRegionLayer();
+    }
+
+
+    async initRegionLayer(){
+        // mostrar todas las regiones en el mapa con distintos colores
+        // iterar CLASIFICACION_RN.regiones.regiones y obtene la query de cada uno
+        let groupRegionLayers = []
+
+        // obtener layers
+        for (const [region_key, region_values] of Object.entries(CLASIFICACION_RN.regiones.regiones)) {
+            // si no hay data saltea
+            if(region_values.osm_query.length == 0){
+                return;
+            }
+
+            let query = region_values.osm_query;
+            let data = await this.routeFetcher.getRegion(region_key, query);
+            if (data) {
+                let geoJson = osmtogeojson(data);
+                
+                let regionLayers = this.mapManager.calculateRegion(region_values, geoJson);
+                // iterar cada elemento del array y agregar
+                for (const regionLayer of regionLayers) {
+                    groupRegionLayers.push(regionLayer);
+                }
+            }
+            
+        };
+        groupRegionLayers = await Promise.all(groupRegionLayers);
+
+        // agrupar y mostrar regiones
+        this.layerRegionGroup = L.layerGroup(groupRegionLayers);
+        // regionGroup.addTo(this.mapManager.map);
+
+        // control de regiones
+        this.controlRegiones = L.control.layers(null, {
+            "Regiones": this.layerRegionGroup
+        }, { collapsed: false })
+        
+        // cuando termine de dibujar mandar por consola
+        console.log("Regiones cargadas en el mapa");
     }
 
     // filtrar rutas (search box)
@@ -160,51 +207,19 @@ export class RouteController {
         
     }
 
-    // mostrar regiones en el mapa
+    // mostrar regiones en el mapa junto a su control
     async toggleRegionDisplay(vialidadCheckboxDiv){
-        // mostrar todas las regiones en el mapa con distintos colores
-        // iterar CLASIFICACION_RN.regiones.regiones y obtene la query de cada uno
         vialidadCheckboxDiv.classList.toggle("selected");
         
         if(vialidadCheckboxDiv.classList.contains("selected")){
-            let groupRegionLayers = []
-
-            // obtener layers
-            for (const [region_key, region_values] of Object.entries(CLASIFICACION_RN.regiones.regiones)) {
-                // si no hay data saltea
-                if(region_values.osm_query.length == 0){
-                    return;
-                }
-
-                let query = region_values.osm_query;
-                let data = await this.routeFetcher.getRegion(region_key, query);
-                if (data) {
-                    let geoJson = osmtogeojson(data);
-                    
-                    let regionLayers = this.mapManager.calculateRegion(region_values, geoJson);
-                    // iterar cada elemento del array y agregar
-                    for (const regionLayer of regionLayers) {
-                        groupRegionLayers.push(regionLayer);
-                    }
-                }
-                
-            };
-            groupRegionLayers = await Promise.all(groupRegionLayers);
-
-
-            // agrupar y mostrar regiones
-            let regionGroup = L.layerGroup(groupRegionLayers);
-            regionGroup.addTo(this.mapManager.map);
-
-            // cuando termine de dibujar mandar por consola
-            console.log("Regiones cargadas en el mapa");
-
-
-        } else {
-            // borrar todas las regiones
-            this.mapManager.removeRegions();
+            this.layerRegionGroup.addTo(this.mapManager.map);     // mostar capas
+            this.controlRegiones.addTo(this.mapManager.map);        // mostrar control
+        } else{
+            // borrar todas las regiones            
+            this.layerRegionGroup.remove(); // borrar capas
+            this.controlRegiones.remove(); // borrar control
+            console.log("eliminadoasds")
         }
-
     }
     
 
