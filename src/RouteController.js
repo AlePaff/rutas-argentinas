@@ -100,10 +100,10 @@ export class RouteController {
 
             // listener para el checkbox de seleccionar todas las rutas
             console.log("Inicializando listeners de checkboxes");
-            // let toggleAllRoutesHtml = document.getElementById("toggleAll");
-            // toggleAllRoutesHtml.addEventListener("click", async () => {
-            //     this.toggleAllRoutes(toggleAllRoutesHtml);
-            // });
+            let labelAllRoutesHtml = document.querySelector("#toggleAll");
+            labelAllRoutesHtml.addEventListener("change", () => {
+                this.toggleSomeRoutes(labelAllRoutesHtml, document);
+            });
 
             let toggleRegionsHtml = document.querySelectorAll(".route-classification");
             console.log(`Se encontraron ${toggleRegionsHtml.length} elementos`);
@@ -219,6 +219,9 @@ export class RouteController {
                     regionTitle.textContent = region_values.display_name;
                     regionSection.appendChild(regionTitle);
 
+                    seleccionarTodo = "<label class='select-all'><input type='checkbox' id='select-all-" + region_key + "'>Seleccionar todas</label>";
+                    regionSection.insertAdjacentHTML("beforeend", seleccionarTodo);
+
                     // agregar rutas de la region
                     region_values.rutas.forEach(routeNumber => {
                         let routeKey = Object.keys(this.routes).find(key => this.routes[key].number == routeNumber);
@@ -226,7 +229,9 @@ export class RouteController {
                             regionSection.appendChild(this.routeElements[routeKey]);
                         }
                     });
+
                     section.appendChild(regionSection);
+
                 });
             }
             
