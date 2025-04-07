@@ -8,7 +8,19 @@ export class RouteController {
         this.controlRegiones = null;    // control de regiones
         this.layerRegionGroup = null; // capa de regiones
 
-        this.loadData().then(() => this.initUI());
+        this.startApp();
+    }
+
+    async startApp() {
+        console.log("Inicializando la app");
+        await this.loadData();
+        console.log("Datos cargados");
+        console.log("Inicializando UI");
+        await this.initUI();
+        console.log("UI inicializada");
+
+        let loadingDiv = document.getElementById("loading");
+        loadingDiv.style.display = "none";
     }
 
     async loadData() {
@@ -32,6 +44,7 @@ export class RouteController {
             routeDiv.classList.add("route");
             routeDiv.classList.add("route-img");
             routeDiv.setAttribute("data-route", route_key);
+            routeDiv.setAttribute("data-route-number", route_values.number);
 
             // Crear barra de carga
             let loadingBar = document.createElement("div");
@@ -62,6 +75,7 @@ export class RouteController {
 
         // Esperar a que todas las promesas de SVG se resuelvan
         Promise.all(svgPromises).then(() => {
+            console.log("Todos los SVG cargados");
             // listener para la busqueda
             document.getElementById("search-input").addEventListener("input", (e) => this.filterRoutes(e.target.value));
 
@@ -78,15 +92,34 @@ export class RouteController {
             
             // listener para el filtro de Vialidad Nacional
             let vialidadCheckbox = document.getElementById('vialidad');
-            vialidadCheckbox.addEventListener('click', () => {
+            vialidadCheckbox.addEventListener('change', async () => {
                 this.toggleRoutesFilter();
                 this.toggleRegionDisplay(vialidadCheckbox);
             });
+
+
+            // listener para el checkbox de seleccionar todas las rutas
+            console.log("Inicializando listeners de checkboxes");
+            // let toggleAllRoutesHtml = document.getElementById("toggleAll");
+            // toggleAllRoutesHtml.addEventListener("click", async () => {
+            //     this.toggleAllRoutes(toggleAllRoutesHtml);
+            // });
+
+            let toggleRegionsHtml = document.querySelectorAll(".route-classification");
+            console.log(`Se encontraron ${toggleRegionsHtml.length} elementos`);
+            toggleRegionsHtml.forEach((toggleRegionsDiv) => {
+                let labelElem = toggleRegionsDiv.querySelector("label");
+
+                labelElem.addEventListener("change", () => {
+                    this.toggleSomeRoutes(labelElem, toggleRegionsDiv);
+                });
+            })
+            
         });
 
-
+        // cargar todas las regiones
+        await this.initRegionLayer();
         
-        this.initRegionLayer();
     }
 
 
@@ -164,6 +197,9 @@ export class RouteController {
             let title = document.createElement("h4");
             title.textContent = value.display_name;
             section.appendChild(title);
+            // checkbox para seleccionar todos
+            let seleccionarTodo = "<label class='select-all'><input type='checkbox' id='select-all-" + key + "'>Seleccionar todas</label>";
+            section.insertAdjacentHTML("beforeend", seleccionarTodo);
 
             // clasificaciones normales
             if(value.rutas){
@@ -212,13 +248,23 @@ export class RouteController {
         vialidadCheckboxDiv.classList.toggle("selected");
         
         if(vialidadCheckboxDiv.classList.contains("selected")){
+            // mostrar regiones
             this.layerRegionGroup.addTo(this.mapManager.map);     // mostar capas
             this.controlRegiones.addTo(this.mapManager.map);        // mostrar control
+            // mostrar botones de seleccionar todos
+            let label = document.querySelectorAll(".select-all");
+            label.forEach(label => {
+                label.style.display = "block";
+            });
         } else{
             // borrar todas las regiones            
             this.layerRegionGroup.remove(); // borrar capas
             this.controlRegiones.remove(); // borrar control
-            console.log("eliminadoasds")
+            // ocultar botones de seleccionar todos
+            let label = document.querySelectorAll(".select-all");
+            label.forEach(label => {
+                label.style.display = "none";
+            });
         }
     }
     
@@ -239,18 +285,31 @@ export class RouteController {
         }
     }
 
-    async toggleAllRoutes() {
-        // advertencia de "esta seguro? puede tardar"
-        if(!confirm("¿Está seguro que desea cargar todas las rutas? Puede tardar unos minutos.")){
-            return;
-        }        
 
-        let checked = document.getElementById("toggleAll").checked;
-        document.querySelectorAll("#routes input[type=checkbox]").forEach(async checkbox => {
-            checkbox.checked = checked;
-            let route = checkbox.getAttribute("data-route");
+    async toggleSomeRoutes(labelHtml, fatherElementHtml) {
+        let checkbox = labelHtml.querySelector("input");
+        // seleccionar todas las rutas
+        if(checkbox.checked){
+            // click to all routes
+            const allRoutes = fatherElementHtml.querySelectorAll(".route:not(.selected)");
 
-            toogleRoute(checkbox, route);
-        });
+            // si son mas de 20 elementos preguntar
+            if(allRoutes.length > 20){
+                let confirmation = confirm("¿Desea seleccionar todas las rutas? Puede tardar unos minutos");
+                if(!confirmation){
+                    checkbox.checked = false;
+                    return;
+                }
+            }
+            allRoutes.forEach(routeDiv => {
+                this.toggleRoute(routeDiv, routeDiv.getAttribute("data-route"));
+            });
+        } else {
+            // clickear todas las rutas seleccioandas
+            const allRoutes = fatherElementHtml.querySelectorAll(".route.selected");
+            allRoutes.forEach(routeDiv => {
+                this.toggleRoute(routeDiv, routeDiv.getAttribute("data-route"));
+            });
+        }
     }
 }
