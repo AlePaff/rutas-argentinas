@@ -76,50 +76,56 @@ export class RouteController {
         // Esperar a que todas las promesas de SVG se resuelvan
         Promise.all(svgPromises).then(() => {
             console.log("Todos los SVG cargados");
-            // listener para la busqueda
-            document.getElementById("search-input").addEventListener("input", (e) => this.filterRoutes(e.target.value));
-
-            // si al buscar se presiona enter, se selecciona la primer ruta
-            document.getElementById("search-input").addEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                    // primer elemennto con display != none
-                    let firstRoute = Object.keys(this.routeElements).find(key => this.routeElements[key].style.display !== "none");
-                    this.toggleRoute(this.routeElements[firstRoute], firstRoute);
-                }
-            });
-
             this.classifyRoutesVialidad();
-            
-            // listener para el filtro de Vialidad Nacional
-            let vialidadCheckbox = document.getElementById('vialidad');
-            vialidadCheckbox.addEventListener('change', async () => {
-                this.toggleRoutesFilter();
-                this.toggleRegionDisplay(vialidadCheckbox);
-            });
 
-
-            // listener para el checkbox de seleccionar todas las rutas
-            console.log("Inicializando listeners de checkboxes");
-            let labelAllRoutesHtml = document.querySelector("#toggleAll");
-            labelAllRoutesHtml.addEventListener("change", () => {
-                this.toggleSomeRoutes(labelAllRoutesHtml, document);
-            });
-
-            let toggleRegionsHtml = document.querySelectorAll(".route-classification");
-            console.log(`Se encontraron ${toggleRegionsHtml.length} elementos`);
-            toggleRegionsHtml.forEach((toggleRegionsDiv) => {
-                let labelElem = toggleRegionsDiv.querySelector("label");
-
-                labelElem.addEventListener("change", () => {
-                    this.toggleSomeRoutes(labelElem, toggleRegionsDiv);
-                });
-            })
+            this.addEventListeners();
             
         });
 
         // cargar todas las regiones
         await this.initRegionLayer();
         
+    }
+
+    addEventListeners() {
+        // listener para la busqueda
+        document.getElementById("search-input").addEventListener("input", (e) => this.filterRoutes(e.target.value));
+
+        // si al buscar se presiona enter, se selecciona la primer ruta
+        document.getElementById("search-input").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                // primer elemennto con display != none
+                let firstRoute = Object.keys(this.routeElements).find(key => this.routeElements[key].style.display !== "none");
+                this.toggleRoute(this.routeElements[firstRoute], firstRoute);
+            }
+        });
+
+        
+        
+        // listener para el filtro de Vialidad Nacional
+        let vialidadCheckbox = document.getElementById('vialidad');
+        vialidadCheckbox.addEventListener('change', async () => {
+            this.toggleRoutesFilter();
+            this.toggleRegionDisplay(vialidadCheckbox);
+        });
+
+
+        // listener para el checkbox de seleccionar todas las rutas
+        console.log("Inicializando listeners de checkboxes");
+        let labelAllRoutesHtml = document.querySelector("#toggleAll");
+        labelAllRoutesHtml.addEventListener("change", () => {
+            this.toggleSomeRoutes(labelAllRoutesHtml, document);
+        });
+
+        let toggleRegionsHtml = document.querySelectorAll(".route-classification");
+        console.log(`Se encontraron ${toggleRegionsHtml.length} elementos`);
+        toggleRegionsHtml.forEach((toggleRegionsDiv) => {
+            let labelElem = toggleRegionsDiv.querySelector("label");
+
+            labelElem.addEventListener("change", () => {
+                this.toggleSomeRoutes(labelElem, toggleRegionsDiv);
+            });
+        })
     }
 
 

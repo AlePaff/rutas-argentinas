@@ -115,11 +115,11 @@ export class MapManager {
                 className: "region-label",
                 html: `<div>${region_data.display_name}</div>`,
                 iconSize: [100, 30], // Tamaño del cuadro de texto
-                iconAnchor: [0, 0] // Centramos el texto en el punto
+                iconAnchor: [30, 0] // casi centrado
             })
         })
 
-        // dibujar punto en color rojo
+        // dibujar punto en color azul
         let regionCircle = L.circle(centroide, {
             color: 'blue',
             fillColor: '#f03',
