@@ -72,11 +72,24 @@ export class RouteFetcher {
     }
 
     // idem que getRoute pero separado para que quede más claro
-    async getRegion(region_id, query) {
+    async getRegionFromQuery(region_id, query) {
         let localData = await this.getFromCache(region_id);
         if (localData) return localData
 
         let data = await this.fetchRoute(region_id, query);
+        if (data) this.saveToCache(region_id, data);
+
+        let geoJson = osmtogeojson(data);
+
+        return geoJson;
+    }
+
+    async getRegionFromFile(region_id, path) {
+        let localData = await this.getFromCache(region_id);
+        if (localData) return localData;
+
+        let response = await fetch(path);
+        let data = await response.json();
         if (data) this.saveToCache(region_id, data);
         return data;
     }

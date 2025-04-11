@@ -137,16 +137,15 @@ export class RouteController {
         // obtener layers
         for (const [region_key, region_values] of Object.entries(CLASIFICACION_RN.regiones.regiones)) {
             // si no hay data saltea
-            if(region_values.osm_query.length == 0){
-                return;
+            let filepath = region_values.region_file;
+            if(filepath.length == 0){
+                continue;
             }
 
-            let query = region_values.osm_query;
-            let data = await this.routeFetcher.getRegion(region_key, query);
+            let data = await this.routeFetcher.getRegionFromFile(region_key, filepath);
             if (data) {
-                let geoJson = osmtogeojson(data);
-                
-                let regionLayers = this.mapManager.calculateRegion(region_values, geoJson);
+                console.log("datadatadata", data)
+                let regionLayers = this.mapManager.calculateRegion(region_values, data);
                 // iterar cada elemento del array y agregar
                 for (const regionLayer of regionLayers) {
                     groupRegionLayers.push(regionLayer);

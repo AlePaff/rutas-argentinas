@@ -149,6 +149,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#e3ffe3",
                 "title_coords": [-25.2049, -66.1377],
+                "region_file": "data/regions/I.geojson",
             },
             "region_2": {
                 "display_name": "Región II",
@@ -167,6 +168,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#ffeec0",
                 "title_coords": [-28.0720, -61.6333],
+                "region_file": "data/regions/II.geojson",
             },
             "region_3": {
                 "display_name": "Región III",
@@ -184,6 +186,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#ffe3e3",
                 "title_coords": [-28.2463, -57.2388],
+                "region_file": "data/regions/III.geojson",
             },
             "region_4": {
                 "display_name": "Región IV",
@@ -202,6 +205,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#e3e3ff",
                 "title_coords": [-34.1436, -67.2363],
+                "region_file": "data/regions/IV.geojson",
             },
             "region_5": {
                 "display_name": "Región V",
@@ -218,6 +222,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#ffffd0",
                 "title_coords": [-31.8402, -62.1606],
+                "region_file": "data/regions/V.geojson",
             },
             "region_6": {
                 "display_name": "Región VI",
@@ -233,6 +238,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#ffeec0",
                 "title_coords": [-36.4566, -60.0513],
+                "region_file": "data/regions/VI.geojson",
             },            
             "region_7": {
                 "display_name": "Región VII",
@@ -249,6 +255,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#ffceff",
                 "title_coords": [-40.1117, -68.1592],
+                "region_file": "data/regions/VII.geojson",
             },
             "region_8": {
                 "display_name": "Región VIII",
@@ -266,6 +273,7 @@ const CLASIFICACION_RN = {
                 `,
                 "region_color": "#ceeef3",
                 "title_coords": [-47.1242, -70.5542],
+                "region_file": "data/regions/VIII.geojson",
             }
         }
     }
