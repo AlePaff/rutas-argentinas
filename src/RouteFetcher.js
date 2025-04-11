@@ -18,6 +18,8 @@ export class RouteFetcher {
     
     // Guardar datos en cache
     async saveToCache(routeId, data) {
+        if(!data || !data.elements || data.elements.length === 0) return;
+
         const cache = await caches.open("routes-cache");
         cache.put(routeId, new Response(JSON.stringify(data)));
     }
