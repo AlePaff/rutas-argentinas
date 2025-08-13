@@ -36,8 +36,6 @@ export class MapManager {
     }
 
     drawRouteFromFile(route, geoJsonData) {
-        console.log(`Dibujando ruta ${route}:`, geoJsonData);
-        
         if (!geoJsonData || !geoJsonData.features || geoJsonData.features.length === 0) {
             console.error(`No hay features válidas para la ruta ${route}`);
             return;
@@ -202,7 +200,7 @@ export class MapManager {
 
         // dibujar punto en color azul
         let regionCircle = L.circle(centroide, {
-            color: 'blue',
+            color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
             radius: 100

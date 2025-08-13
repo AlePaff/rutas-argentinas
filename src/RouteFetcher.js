@@ -145,7 +145,7 @@ export class RouteFetcher {
             f => f.properties && f.properties.cod_ruta === codRuta
         );
         
-        console.log(`Buscando ruta ${codRuta}, encontradas ${features.length} features`);
+        // console.log(`DEBUG: Buscando ruta ${codRuta}, encontradas ${features.length} features`);
         
         if (features.length === 0) {
             console.warn(`No se encontraron features para la ruta ${codRuta}`);
@@ -160,15 +160,12 @@ export class RouteFetcher {
             f.geometry.coordinates.length > 0
         );
         
-        console.log(`Features válidas para ruta ${codRuta}:`, validFeatures.length);
-        
         // Retornar un FeatureCollection con las features encontradas
         const result = {
             type: "FeatureCollection",
             features: validFeatures
         };
         
-        console.log(`Resultado para ruta ${codRuta}:`, result);
         return result;
     }
 }

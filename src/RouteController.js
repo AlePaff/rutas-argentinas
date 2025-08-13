@@ -292,7 +292,7 @@ export class RouteController {
         
         if (routeDiv.classList.contains("selected")) {
             routeDiv.classList.add("loading-route-icon");
-            console.log(`Cargando ruta ${routeNumber}...`);
+            // console.log(`Cargando ruta ${routeNumber}...`);
             
             try {
                 if(allow_full_details_routes){
@@ -306,7 +306,7 @@ export class RouteController {
                     // descargar ruta con menos detalle
                     let data = await this.routeFetcher.fetchRouteFromFile(routeNumber);
                     if (data && data.features && data.features.length > 0) {
-                        console.log(`Datos obtenidos para ruta ${routeNumber}:`, data);
+                        // console.log(`Datos obtenidos para ruta ${routeNumber}:`, data);
                         this.mapManager.drawRouteFromFile(routeNumber, data);
                     } else {
                         console.error(`No se obtuvieron datos válidos para la ruta ${routeNumber}`);
@@ -333,12 +333,13 @@ export class RouteController {
         let checkbox = labelHtml.querySelector("input");
         // seleccionar todas las rutas
         if(checkbox.checked){
-            // click to all routes
-            const allRoutes = fatherElementHtml.querySelectorAll(".route:not(.selected)");
+            // click to all visible routes
+            const allRoutes = fatherElementHtml.querySelectorAll(".route:not(.selected):not([style*='display: none'])");
 
-            // si son mas de 20 elementos preguntar
-            if(allRoutes.length > 20){
-                let confirmation = confirm("¿Desea seleccionar todas las rutas? Puede tardar unos minutos");
+
+            // si son mas de X elementos preguntar
+            if(allRoutes.length > 30){
+                let confirmation = confirm("¿Desea seleccionar todas las rutas? Puede demorar un tiempo.");
                 if(!confirmation){
                     checkbox.checked = false;
                     return;
@@ -348,8 +349,8 @@ export class RouteController {
                 this.toggleRoute(routeDiv, routeDiv.getAttribute("data-route"));
             });
         } else {
-            // clickear todas las rutas seleccioandas
-            const allRoutes = fatherElementHtml.querySelectorAll(".route.selected");
+            // clickear todas las rutas seleccionadas
+            const allRoutes = fatherElementHtml.querySelectorAll(".route.selected:not([style*='display: none'])");
             allRoutes.forEach(routeDiv => {
                 this.toggleRoute(routeDiv, routeDiv.getAttribute("data-route"));
             });
