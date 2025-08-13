@@ -15,6 +15,11 @@ export class RouteController {
         console.log("Inicializando la app");
         await this.loadData();
         console.log("Datos cargados");
+        
+        console.log("Precargando archivo pavimento.geojson...");
+        await this.routeFetcher.preloadPavimentoGeojson();
+        console.log("Archivo pavimento.geojson precargado");
+        
         console.log("Inicializando UI");
         await this.initUI();
         console.log("UI inicializada");

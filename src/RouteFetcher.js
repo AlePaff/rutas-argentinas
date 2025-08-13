@@ -1,6 +1,24 @@
 export class RouteFetcher {
     constructor() {
         this.bbox = BBOX_ARG; // Límite para Argentina
+        this._pavimentoGeojson = null; // Para almacenar el GeoJSON de pavimento
+    }
+
+    async preloadPavimentoGeojson() {
+        if (!this._pavimentoGeojson) {
+            try {
+                console.log("Cargando highways/pavimento.geojson...");
+                const response = await fetch("highways/pavimento.geojson");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                this._pavimentoGeojson = await response.json();
+                console.log(`Pavimento GeoJSON cargado: ${this._pavimentoGeojson.features.length} features`);
+            } catch (error) {
+                console.error("Error precargando pavimento.geojson:", error);
+                this._pavimentoGeojson = null;
+            }
+        }
     }
 
     async fetchRoute(route, query) {
@@ -111,19 +129,15 @@ export class RouteFetcher {
         
         // console.log(`DEBUG: Procesando ruta ${route_id} -> número ${routeNumber} -> código ${codRuta}`);
         
-        // Cargar el archivo pavimento.geojson solo una vez y cachear
+        // Cargar el archivo pavimento.geojson solo una vez
         if (!this._pavimentoGeojson) {
-            try {
-                const response = await fetch("highways/pavimento.geojson");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                this._pavimentoGeojson = await response.json();
-                // console.log("Pavimento GeoJSON cargado:", this._pavimentoGeojson);
-            } catch (error) {
-                console.error("Error cargando pavimento.geojson:", error);
-                return null;
-            }
+            console.warn("Pavimento GeoJSON no estaba precargado, cargando ahora...");
+            await this.preloadPavimentoGeojson();
+        }
+         // Si aún no se pudo cargar, retornar null
+        if (!this._pavimentoGeojson) {
+            console.error("No se pudo cargar el archivo pavimento.geojson");
+            return null;
         }
         
         // Filtrar las features que coincidan con el cod_ruta

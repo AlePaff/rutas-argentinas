@@ -45,9 +45,7 @@ export class MapManager {
 
         const layer = L.geoJSON(geoJsonData, {
             style: { color: "blue", weight: 3 },
-            onEachFeature: (feature, layer) => {
-                console.log(`Feature procesada:`, feature);
-            }
+            // onEachFeature: (feature, layer) => {console.log(`DEBUG: Feature procesada:`, feature);}
         }).addTo(this.map);
 
         // Extraer coordenadas según el tipo de geometría
