@@ -144,7 +144,6 @@ export class RouteController {
 
             let data = await this.routeFetcher.getRegionFromFile(region_key, filepath);
             if (data) {
-                console.log("datadatadata", data)
                 let regionLayers = this.mapManager.calculateRegion(region_values, data);
                 // iterar cada elemento del array y agregar
                 for (const regionLayer of regionLayers) {
@@ -281,14 +280,43 @@ export class RouteController {
 
     // mostrar u ocultar ruta
     async toggleRoute(routeDiv, routeNumber) {
+        // cargará desde un archivo o bien hará una query a la API
+        let allow_full_details_routes = false;
+
         routeDiv.classList.toggle("selected");
         
         if (routeDiv.classList.contains("selected")) {
             routeDiv.classList.add("loading-route-icon");
-            let data = await this.routeFetcher.getRoute(routeNumber);
-            if (data) {
-                let geoJson = osmtogeojson(data);
-                this.mapManager.drawRoute(routeNumber, geoJson);
+            console.log(`Cargando ruta ${routeNumber}...`);
+            
+            try {
+                if(allow_full_details_routes){
+                    // descargar rutas HD
+                    let data = await this.routeFetcher.getRoute(routeNumber);
+                    if (data) {
+                        let geoJson = osmtogeojson(data);
+                        this.mapManager.drawRoute(routeNumber, geoJson);
+                    }
+                } else {
+                    // descargar ruta con menos detalle
+                    let data = await this.routeFetcher.fetchRouteFromFile(routeNumber);
+                    if (data && data.features && data.features.length > 0) {
+                        console.log(`Datos obtenidos para ruta ${routeNumber}:`, data);
+                        this.mapManager.drawRouteFromFile(routeNumber, data);
+                    } else {
+                        console.error(`No se obtuvieron datos válidos para la ruta ${routeNumber}`);
+                        console.log("Intentando descargar consultando a API")
+                        let data = await this.routeFetcher.getRoute(routeNumber);
+                        if (data) {
+                            let geoJson = osmtogeojson(data);
+                            this.mapManager.drawRoute(routeNumber, geoJson);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error(`Error cargando ruta ${routeNumber}:`, error);
+                routeDiv.classList.remove("loading-route-icon");
+                routeDiv.classList.remove("selected");
             }
         } else {
             this.mapManager.removeRoute(routeNumber);

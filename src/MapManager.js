@@ -35,6 +35,89 @@ export class MapManager {
         });
     }
 
+    drawRouteFromFile(route, geoJsonData) {
+        console.log(`Dibujando ruta ${route}:`, geoJsonData);
+        
+        if (!geoJsonData || !geoJsonData.features || geoJsonData.features.length === 0) {
+            console.error(`No hay features válidas para la ruta ${route}`);
+            return;
+        }
+
+        const layer = L.geoJSON(geoJsonData, {
+            style: { color: "blue", weight: 3 },
+            onEachFeature: (feature, layer) => {
+                console.log(`Feature procesada:`, feature);
+            }
+        }).addTo(this.map);
+
+        // Extraer coordenadas según el tipo de geometría
+        let allCoordinates = [];
+        geoJsonData.features.forEach((feature, index) => {
+            // console.log(`DEBUG: Procesando feature ${index}:`, feature.geometry);
+            
+            if (feature.geometry.type === 'LineString') {
+                // Para LineString, las coordenadas están directamente en coordinates
+                const coords = feature.geometry.coordinates.map(coord => {
+                    // Verificar que las coordenadas sean válidas
+                    if (!Array.isArray(coord) || coord.length < 2) {
+                        console.warn('Coordenada inválida:', coord);
+                        return null;
+                    }
+                    return [coord[1], coord[0]]; // [lng, lat] -> [lat, lng]
+                }).filter(coord => coord !== null);
+                
+                allCoordinates = allCoordinates.concat(coords);
+                
+            } else if (feature.geometry.type === 'MultiLineString') {
+                // Para MultiLineString, hay que aplanar un nivel más
+                feature.geometry.coordinates.forEach(line => {
+                    const coords = line.map(coord => {
+                        if (!Array.isArray(coord) || coord.length < 2) {
+                            console.warn('Coordenada inválida:', coord);
+                            return null;
+                        }
+                        return [coord[1], coord[0]]; // [lng, lat] -> [lat, lng]
+                    }).filter(coord => coord !== null);
+                    
+                    allCoordinates = allCoordinates.concat(coords);
+                });
+            }
+        });
+
+        // console.log(`DEBUG: Total coordenadas extraídas para ruta ${route}:`, allCoordinates.length);
+        
+        if (allCoordinates.length === 0) {
+            console.error(`No se pudieron extraer coordenadas válidas para la ruta ${route}`);
+            return;
+        }
+
+        this.routeLayers[route] = {
+            layer: layer,
+            coordinates: allCoordinates
+        };
+
+        // NOTE: Permite hacer zoom a la ruta seleccionada
+        // TODO: Verifica comportamiento al seleccionar multiples rutas
+        // const bounds = layer.getBounds();
+        // if (bounds.isValid()) {
+            // console.log(`Bounds válidos para ruta ${route}:`, bounds);
+            
+            // this.map.fitBounds(bounds);
+        // }
+
+        this.updateRouteIcon(route);
+
+        this.map.whenReady(() => {
+            console.log(`Route ${route} has been fully loaded on the map.`);
+            // Change the route icon color dynamically
+            const routeDiv = document.querySelector(`[data-route="${route}"]`);
+            if (routeDiv) {
+                // delete class "loading-route-icon"
+                routeDiv.classList.remove("loading-route-icon");
+            }
+        });
+    }
+
     updateRouteIcon(route) {
         // coloca el icono aproximadamente a la mitad de la ruta
         // considera la mitad obteniendo el indice medio de la lista de coordenadas de la ruta

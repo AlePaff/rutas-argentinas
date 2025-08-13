@@ -1,4 +1,3 @@
-
 export class RouteFetcher {
     constructor() {
         this.bbox = BBOX_ARG; // Límite para Argentina
@@ -19,6 +18,14 @@ export class RouteFetcher {
     // Guardar datos en cache
     async saveToCache(routeId, data) {
         if(!data || !data.elements || data.elements.length === 0) return;
+
+        const cache = await caches.open("routes-cache");
+        cache.put(routeId, new Response(JSON.stringify(data)));
+    }
+
+    async saveToCacheFromFile(routeId, data) {
+        // Para GeoJSON, verificar que tenga features
+        if(!data || !data.features || data.features.length === 0) return;
 
         const cache = await caches.open("routes-cache");
         cache.put(routeId, new Response(JSON.stringify(data)));
@@ -92,13 +99,62 @@ export class RouteFetcher {
 
         let response = await fetch(path);
         let data = await response.json();
-        if (data) this.saveToCache(region_id, data);
+        if (data) this.saveToCacheFromFile(region_id, data);
         return data;
     }
 
-
-
-    
-
-    
+    async fetchRouteFromFile(route_id) {
+        // Extraer solo el número de la ruta (ej: "RN5" -> "5", "5" -> "5")
+        let routeNumber = route_id.toString().replace(/^RN/, '');
+        // Convertir a string y rellenar con ceros a la izquierda (ej: "5" -> "0005")
+        let codRuta = routeNumber.padStart(4, "0");
+        
+        // console.log(`DEBUG: Procesando ruta ${route_id} -> número ${routeNumber} -> código ${codRuta}`);
+        
+        // Cargar el archivo pavimento.geojson solo una vez y cachear
+        if (!this._pavimentoGeojson) {
+            try {
+                const response = await fetch("highways/pavimento.geojson");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                this._pavimentoGeojson = await response.json();
+                // console.log("Pavimento GeoJSON cargado:", this._pavimentoGeojson);
+            } catch (error) {
+                console.error("Error cargando pavimento.geojson:", error);
+                return null;
+            }
+        }
+        
+        // Filtrar las features que coincidan con el cod_ruta
+        const features = this._pavimentoGeojson.features.filter(
+            f => f.properties && f.properties.cod_ruta === codRuta
+        );
+        
+        console.log(`Buscando ruta ${codRuta}, encontradas ${features.length} features`);
+        
+        if (features.length === 0) {
+            console.warn(`No se encontraron features para la ruta ${codRuta}`);
+            return null;
+        }
+        
+        // Verificar que las features tengan geometría válida
+        const validFeatures = features.filter(f => 
+            f.geometry && 
+            (f.geometry.type === 'LineString' || f.geometry.type === 'MultiLineString') &&
+            f.geometry.coordinates && 
+            f.geometry.coordinates.length > 0
+        );
+        
+        console.log(`Features válidas para ruta ${codRuta}:`, validFeatures.length);
+        
+        // Retornar un FeatureCollection con las features encontradas
+        const result = {
+            type: "FeatureCollection",
+            features: validFeatures
+        };
+        
+        console.log(`Resultado para ruta ${codRuta}:`, result);
+        return result;
+    }
 }
